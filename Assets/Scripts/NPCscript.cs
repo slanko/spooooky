@@ -73,7 +73,7 @@ public class NPCscript : MonoBehaviour
                 }
                 if (rayHit.transform.gameObject.tag == "Player")
                 {
-                    fearAmount = pS.spookResource;
+                    fearAmount = pS.spookResource + god.globalFearLevel;
                 }
             }
         }

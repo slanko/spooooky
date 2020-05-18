@@ -18,6 +18,16 @@ public class wallHideScript : MonoBehaviour
         if(other.gameObject.tag == "wallDestroyer")
         {
             myRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+
+            foreach(Transform childTransform in transform)
+            {
+                MeshRenderer childMeshRenderer;
+                if (childTransform.GetComponent<MeshRenderer>() != null)
+                {
+                    childMeshRenderer = childTransform.GetComponent<MeshRenderer>();
+                    childMeshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+                }
+            }
         }
     }
 
@@ -26,6 +36,16 @@ public class wallHideScript : MonoBehaviour
         if (other.gameObject.tag == "wallDestroyer")
         {
             myRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+
+            foreach (Transform childTransform in transform)
+            {
+                MeshRenderer childMeshRenderer;
+                if (childTransform.GetComponent<MeshRenderer>() != null)
+                {
+                    childMeshRenderer = childTransform.GetComponent<MeshRenderer>();
+                    childMeshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+                }
+            }
         }
     }
 }

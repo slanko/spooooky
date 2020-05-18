@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class godScript : MonoBehaviour
 {
-    public float NPCcount;
+    public float NPCcount, globalFearLevel;
     public GameObject winText;
     public Text counter;
     bool invokedRestart = false;
