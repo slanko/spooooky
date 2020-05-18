@@ -7,6 +7,7 @@ TagManager:
   - scary
   - Exit
   - stealthzone
+  - wallDestroyer
   layers:
   - Default
   - TransparentFX
@@ -18,8 +19,8 @@ TagManager:
   - 
   - NoInteractWithSightlines
   - Sightlines
-  - 
-  - 
+  - Walls
+  - WallHider
   - 
   - 
   - 

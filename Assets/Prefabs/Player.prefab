@@ -113,7 +113,16 @@ MonoBehaviour:
   downKey: 115
   leftKey: 97
   rightKey: 100
+  camLeftKey: 0
+  camRightKey: 0
+  resetGameKey: 0
+  stealthed: 0
+  spookOMeter: {fileID: 0}
+  spookResource: 0
+  spookGainRate: 0
+  spookDiminishRate: 0
   cameraBuddy: {fileID: 0}
+  cameraBuddyBuddy: {fileID: 0}
   moveSpeed: 5
   camLerpSpeed: 0.05
 --- !u!54 &60034090860818982
@@ -237,7 +246,7 @@ NavMeshObstacle:
   m_Shape: 0
   m_Extents: {x: 0.3, y: 0.5, z: 0.3}
   m_MoveThreshold: 0.1
-  m_Carve: 1
+  m_Carve: 0
   m_CarveOnlyStationary: 0
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
