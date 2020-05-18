@@ -9,7 +9,7 @@ public class NPCscript : MonoBehaviour
     NavMeshAgent nav;
     public float fearAmount, fearDiminishRate, moveTimeMin, moveTimeMax, moveRangeMin, moveRangeMax;
     public bool scared, resetMove;
-    public GameObject exit;
+    public GameObject exit, buddyPlayer;
     playerScript pS;
     public ParticleSystem particlez;
     // Start is called before the first frame update
@@ -20,6 +20,7 @@ public class NPCscript : MonoBehaviour
         changePosition();
         exit = GameObject.Find("Exit");
         pS = GameObject.Find("Player").GetComponent<playerScript>();
+        buddyPlayer = GameObject.Find("Player");
         god.NPCcount++;
     }
 
@@ -57,11 +58,24 @@ public class NPCscript : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
+        RaycastHit rayHit;
+
         if(other.tag == "scary")
         {
-            fearAmount = pS.spookResource;
+            if (Physics.Raycast(transform.position, buddyPlayer.transform.position - transform.position, out rayHit, Vector3.Distance(transform.position, buddyPlayer.transform.position)))
+            {
+                Debug.DrawRay(transform.position, (buddyPlayer.transform.position - transform.position).normalized, Color.green, 0.1f);
+                if(rayHit.transform.gameObject.tag == "Wall")
+                {
+                    return;
+                }
+                if (rayHit.transform.gameObject.tag == "Player")
+                {
+                    fearAmount = pS.spookResource;
+                }
+            }
         }
         if(other.tag == "Exit")
         {
