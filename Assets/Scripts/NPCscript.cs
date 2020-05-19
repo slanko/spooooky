@@ -8,10 +8,11 @@ public class NPCscript : MonoBehaviour
     godScript god;
     NavMeshAgent nav;
     public float fearAmount, fearDiminishRate, moveTimeMin, moveTimeMax, moveRangeMin, moveRangeMax;
-    public bool scared, resetMove;
+    public bool scared, resetMove, screamed;
     public GameObject exit, buddyPlayer;
     playerScript pS;
     public ParticleSystem particlez;
+    AudioSource aud;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +20,7 @@ public class NPCscript : MonoBehaviour
         nav = GetComponent<NavMeshAgent>();
         changePosition();
         exit = GameObject.Find("Exit");
+        aud = GetComponent<AudioSource>();
         pS = GameObject.Find("Player").GetComponent<playerScript>();
         buddyPlayer = GameObject.Find("Player");
         god.NPCcount++;
@@ -26,6 +28,8 @@ public class NPCscript : MonoBehaviour
 
     private void Update()
     {
+        Debug.DrawLine(transform.position, nav.destination, Color.green);
+
         if(scared == true)
         {
             nav.SetDestination(exit.transform.position);
@@ -74,6 +78,12 @@ public class NPCscript : MonoBehaviour
                 if (rayHit.transform.gameObject.tag == "Player")
                 {
                     fearAmount = pS.spookResource + god.globalFearLevel;
+                    if(screamed == false)
+                    {
+                        aud.pitch = Random.Range(1f, 3f);
+                        aud.Play();
+                        screamed = true;
+                    }
                 }
             }
         }
@@ -88,6 +98,7 @@ public class NPCscript : MonoBehaviour
     {
         if(scared == false)
         {
+            screamed = false;
             nav.speed = 3.5f;
             resetMove = true;
             Vector3 navPos;

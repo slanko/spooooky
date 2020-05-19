@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using GameAnalyticsSDK;
 public class godScript : MonoBehaviour
 {
     public float NPCcount, globalFearLevel;
@@ -12,7 +13,7 @@ public class godScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        GameAnalytics.Initialize();
     }
 
     // Update is called once per frame
