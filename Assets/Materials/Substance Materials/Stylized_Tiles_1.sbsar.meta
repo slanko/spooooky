@@ -100,7 +100,7 @@ ScriptedImporter:
         float: 1
       colors:
       - name: _Color
-        color: {r: 1, g: 1, b: 1, a: 1}
+        color: {r: 0.45937166, g: 0.8773585, b: 0.7646388, a: 1}
       - name: _EmissionColor
         color: {r: 0, g: 0, b: 0, a: 1}
     outputDescList:
@@ -228,8 +228,8 @@ ScriptedImporter:
     material: {fileID: 1123599210878104282, guid: 14f84dcb702f7f74685377a314e90d8e,
       type: 3}
     generatedTextures:
-    - {fileID: -7968661537922252998, guid: 14f84dcb702f7f74685377a314e90d8e, type: 3}
-    - {fileID: 3106594179453532115, guid: 14f84dcb702f7f74685377a314e90d8e, type: 3}
-    - {fileID: 3888187527796993604, guid: 14f84dcb702f7f74685377a314e90d8e, type: 3}
-    - {fileID: -3593361929181697128, guid: 14f84dcb702f7f74685377a314e90d8e, type: 3}
     - {fileID: 5202839500272446134, guid: 14f84dcb702f7f74685377a314e90d8e, type: 3}
+    - {fileID: -7968661537922252998, guid: 14f84dcb702f7f74685377a314e90d8e, type: 3}
+    - {fileID: -3593361929181697128, guid: 14f84dcb702f7f74685377a314e90d8e, type: 3}
+    - {fileID: 3888187527796993604, guid: 14f84dcb702f7f74685377a314e90d8e, type: 3}
+    - {fileID: 3106594179453532115, guid: 14f84dcb702f7f74685377a314e90d8e, type: 3}
