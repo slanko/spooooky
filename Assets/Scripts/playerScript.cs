@@ -3,19 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.AI;
 
 public class playerScript : MonoBehaviour
 {
-    public KeyCode upKey, downKey, leftKey, rightKey, camLeftKey, camRightKey, resetGameKey;
+    Animator anim;
+    AudioSource aud;
+    public KeyCode scareKey, useKey, upKey, downKey, leftKey, rightKey, camLeftKey, camRightKey, resetGameKey;
     public bool stealthed;
     public Slider spookOMeter;
     public float spookResource, spookGainRate, spookDiminishRate;
-    public GameObject cameraBuddy, cameraBuddyBuddy;
+    public GameObject cameraBuddy, cameraBuddyBuddy, debugCircleVisualizer1;
     public float moveSpeed, camLerpSpeed;
+    public NavMeshObstacle navBlocker;
     // Start is called before the first frame update
     void Start()
     {
-        
+        anim = GetComponent<Animator>();
+        aud = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -55,6 +60,17 @@ public class playerScript : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 225 + cameraBuddy.transform.rotation.eulerAngles.y, 0);
         }
         //end big fat movement code block
+
+        //lovely actions section
+        if (Input.GetKeyDown(scareKey))
+        {
+            if(stealthed == false)
+            {
+                anim.SetTrigger("scare");
+                aud.pitch = Random.Range(.5f, 1.5f);
+                aud.Play();
+            }
+        }
 
         //camera controls part, this changes the cameraBuddy's Buddy's position so the camera buddy can lerp to it's rotation (it's an easier but slightly messy way to doing it)
         if (Input.GetKeyDown(camLeftKey))
@@ -97,6 +113,11 @@ public class playerScript : MonoBehaviour
             }
         }
 
+        //nav blocker size change based on scariness
+        navBlocker.radius = (spookResource / 3) * 1.7f;
+        float circleVizSize = (spookResource / 3) * 0.1674161f;
+        debugCircleVisualizer1.transform.localScale =new Vector3(circleVizSize, circleVizSize, circleVizSize);
+
         spookOMeter.value = spookResource;
     }
 
@@ -116,6 +137,15 @@ public class playerScript : MonoBehaviour
         if (other.tag == "stealthzone")
         {
             stealthed = true;
+        }
+        if(other.tag == "mouseHole")
+        {
+            if (Input.GetKeyDown(useKey))
+            {
+                mouseHoleScript MSH;
+                MSH = other.GetComponent<mouseHoleScript>();
+                transform.position = new Vector3(MSH.otherMSH.transform.position.x, transform.position.y, MSH.otherMSH.transform.position.z);
+            }
         }
     }
 

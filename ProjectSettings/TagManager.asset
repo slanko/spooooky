@@ -8,6 +8,8 @@ TagManager:
   - Exit
   - stealthzone
   - wallDestroyer
+  - scareSphere
+  - mouseHole
   layers:
   - Default
   - TransparentFX

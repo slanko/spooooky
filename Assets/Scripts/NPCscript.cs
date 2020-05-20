@@ -9,10 +9,14 @@ public class NPCscript : MonoBehaviour
     NavMeshAgent nav;
     public float fearAmount, fearDiminishRate, moveTimeMin, moveTimeMax, moveRangeMin, moveRangeMax;
     public bool scared, resetMove, screamed;
-    public GameObject exit, buddyPlayer;
+    public GameObject exit, buddyPlayer, myScareSphere;
     playerScript pS;
     public ParticleSystem particlez;
     AudioSource aud;
+
+    [Header("Score Stuff")]
+    public int pointValue;
+    public int multiplierChange;
     // Start is called before the first frame update
     void Start()
     {
@@ -51,38 +55,65 @@ public class NPCscript : MonoBehaviour
             fearAmount = fearAmount - (fearDiminishRate * Time.deltaTime);
             scared = true;
             resetMove = false;
+            myScareSphere.SetActive(true);
         }
         else
         {
             scared = false;
-            if(resetMove == false)
+            myScareSphere.SetActive(false);
+            if (resetMove == false)
             {
                 changePosition();
             }
         }
+
+        if (Physics.Raycast(transform.position, buddyPlayer.transform.position - transform.position, out var rayHit, Vector3.Distance(transform.position, buddyPlayer.transform.position)))
+        {
+            if(scared == false)
+            {
+                if (rayHit.collider.gameObject.tag != "Player")
+                {
+                    Debug.DrawRay(transform.position, (buddyPlayer.transform.position - transform.position), Color.red);
+                }
+                else
+                {
+                    Debug.DrawRay(transform.position, (buddyPlayer.transform.position - transform.position), Color.yellow);
+                }
+            }
+            else
+            {
+                Debug.DrawRay(transform.position, (buddyPlayer.transform.position - transform.position), Color.blue);
+            }
+
+        }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        RaycastHit rayHit;
-
+        //check if the other tag is a scary radius
         if(other.tag == "scary")
         {
-            if (Physics.Raycast(transform.position, buddyPlayer.transform.position - transform.position, out rayHit, Vector3.Distance(transform.position, buddyPlayer.transform.position)))
+            //shoot a raycast out to determine the player distance, and get a raycast hit on whatever it hits
+            if (Physics.Raycast(transform.position, buddyPlayer.transform.position - transform.position, out var rayHit, Vector3.Distance(transform.position, buddyPlayer.transform.position)))
             {
-                Debug.DrawRay(transform.position, (buddyPlayer.transform.position - transform.position).normalized, Color.green, 0.1f);
-                if(rayHit.transform.gameObject.tag == "Wall")
+
+                if(rayHit.collider.gameObject.tag != "Player")
                 {
+                    Debug.DrawRay(transform.position, (buddyPlayer.transform.position - transform.position), Color.red, 5f);
                     return;
                 }
-                if (rayHit.transform.gameObject.tag == "Player")
+                else 
                 {
-                    fearAmount = pS.spookResource + god.globalFearLevel;
-                    if(screamed == false)
+                    Debug.DrawLine(transform.position, rayHit.point, Color.cyan, 5f);
+                    if (pS.spookResource > 0 && pS.stealthed == false)
                     {
-                        aud.pitch = Random.Range(1f, 3f);
-                        aud.Play();
-                        screamed = true;
+                        fearAmount = pS.spookResource + god.globalFearLevel;
+                        if (screamed == false)
+                        {
+                            aud.pitch = Random.Range(1f, 3f);
+                            aud.Play();
+                            screamed = true;
+                        }
                     }
                 }
             }
@@ -90,7 +121,31 @@ public class NPCscript : MonoBehaviour
         if(other.tag == "Exit")
         {
             god.NPCcount--;
+            god.upScore(pointValue, multiplierChange);
             Destroy(this.gameObject);
+        }
+
+        if(other.tag == "scareSphere")
+        {
+            if (other.gameObject == myScareSphere)
+            {
+                return;
+            }
+            else
+            {
+                NPCscript otherNPCbrain;
+                otherNPCbrain = other.gameObject.GetComponentInParent<NPCscript>();
+                if(otherNPCbrain.scared == true)
+                {
+                    fearAmount = otherNPCbrain.fearAmount;
+                    if (screamed == false)
+                    {
+                        aud.pitch = Random.Range(1f, 3f);
+                        aud.Play();
+                        screamed = true;
+                    }
+                }
+            }
         }
     }
 
