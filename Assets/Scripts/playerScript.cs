@@ -9,12 +9,21 @@ public class playerScript : MonoBehaviour
 {
     Animator anim;
     AudioSource aud;
-    public KeyCode scareKey, useKey, upKey, downKey, leftKey, rightKey, camLeftKey, camRightKey, resetGameKey;
+    [Header("Inputs")]
+    public KeyCode scareKey;
+    public KeyCode useKey, upKey, downKey, leftKey, rightKey, camLeftKey, camRightKey, resetGameKey;
+    public float moveSpeed;
+
+    [Header("Spook Mechanics")]
     public bool stealthed;
     public Slider spookOMeter;
     public float spookResource, spookGainRate, spookDiminishRate;
+
+    [Header("Camera Stuff")]
+    public float camLerpSpeed;
     public GameObject cameraBuddy, cameraBuddyBuddy, debugCircleVisualizer1;
-    public float moveSpeed, camLerpSpeed;
+
+    [Header("AI Stuff")]
     public NavMeshObstacle navBlocker;
     // Start is called before the first frame update
     void Start()
@@ -72,7 +81,7 @@ public class playerScript : MonoBehaviour
             }
         }
 
-        //camera controls part, this changes the cameraBuddy's Buddy's position so the camera buddy can lerp to it's rotation (it's an easier but slightly messy way to doing it)
+        //camera controls part, this changes the cameraBuddy's Buddy's position so the camera buddy can lerp to it's rotation (it's an easier but slightly messy way OF doing it)
         if (Input.GetKeyDown(camLeftKey))
         {
             cameraBuddyBuddy.transform.Rotate(0, -90, 0);
