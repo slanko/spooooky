@@ -44,12 +44,12 @@ ScriptedImporter:
         offset: {x: 0, y: 0}
       - name: _EmissionMap
         texture: {instanceID: 0}
-        scale: {x: 1, y: 1}
+        scale: {x: 0.2, y: 0.2}
         offset: {x: 0, y: 0}
       - name: _MainTex
         texture: {fileID: -6131550842460082905, guid: 101b53dd57c024b46a775ed3bd28b999,
           type: 3}
-        scale: {x: 1, y: 1}
+        scale: {x: 0.2, y: 0.2}
         offset: {x: 0, y: 0}
       - name: _MetallicGlossMap
         texture: {fileID: -6421268223839950393, guid: 101b53dd57c024b46a775ed3bd28b999,
@@ -229,8 +229,8 @@ ScriptedImporter:
     material: {fileID: -8193432288359797908, guid: 101b53dd57c024b46a775ed3bd28b999,
       type: 3}
     generatedTextures:
-    - {fileID: -6131550842460082905, guid: 101b53dd57c024b46a775ed3bd28b999, type: 3}
-    - {fileID: -1775379346029712500, guid: 101b53dd57c024b46a775ed3bd28b999, type: 3}
-    - {fileID: -6421268223839950393, guid: 101b53dd57c024b46a775ed3bd28b999, type: 3}
-    - {fileID: 7848533523052711190, guid: 101b53dd57c024b46a775ed3bd28b999, type: 3}
     - {fileID: -5820310191984520092, guid: 101b53dd57c024b46a775ed3bd28b999, type: 3}
+    - {fileID: -6131550842460082905, guid: 101b53dd57c024b46a775ed3bd28b999, type: 3}
+    - {fileID: 7848533523052711190, guid: 101b53dd57c024b46a775ed3bd28b999, type: 3}
+    - {fileID: -6421268223839950393, guid: 101b53dd57c024b46a775ed3bd28b999, type: 3}
+    - {fileID: -1775379346029712500, guid: 101b53dd57c024b46a775ed3bd28b999, type: 3}
