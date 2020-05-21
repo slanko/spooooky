@@ -10,6 +10,7 @@ TagManager:
   - wallDestroyer
   - scareSphere
   - mouseHole
+  - postProcessing
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - Sightlines
   - Walls
   - WallHider
-  - 
+  - postProcess
   - 
   - 
   - 
