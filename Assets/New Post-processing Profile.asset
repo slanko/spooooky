@@ -104,13 +104,13 @@ MonoBehaviour:
     value: 100
   lift:
     overrideState: 1
-    value: {x: 0.5697337, y: 0.60357153, z: 1, w: 0}
+    value: {x: 0.4904241, y: 0.49815294, z: 1, w: 0}
   gamma:
     overrideState: 0
     value: {x: 0.80990195, y: 0.7269249, z: 1, w: 0}
   gain:
     overrideState: 1
-    value: {x: 1, y: 0.9906858, z: 0.93258893, w: 0}
+    value: {x: 1, y: 0.9704257, z: 0.942659, w: -0.33312774}
   masterCurve:
     overrideState: 0
     value:
@@ -1329,7 +1329,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 2
+    value: 3
   threshold:
     overrideState: 0
     value: 1
@@ -1379,7 +1379,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 0.55
+    value: 1
   color:
     overrideState: 0
     value: {r: 0, g: 0, b: 0, a: 1}
@@ -1441,25 +1441,25 @@ MonoBehaviour:
     overrideState: 1
     value: 1
   mode:
-    overrideState: 1
+    overrideState: 0
     value: 0
   color:
     overrideState: 1
     value: {r: 0.34127256, g: 0, b: 0.5849056, a: 1}
   center:
-    overrideState: 1
+    overrideState: 0
     value: {x: 0.5, y: 0.5}
   intensity:
     overrideState: 1
     value: 0.45
   smoothness:
-    overrideState: 1
+    overrideState: 0
     value: 0.2
   roundness:
-    overrideState: 1
+    overrideState: 0
     value: 1
   rounded:
-    overrideState: 1
+    overrideState: 0
     value: 0
   mask:
     overrideState: 1

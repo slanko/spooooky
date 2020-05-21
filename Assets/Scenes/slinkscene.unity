@@ -2586,7 +2586,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 207097404}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 2
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -2957,7 +2957,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 222715496}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 2
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -6464,7 +6464,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 494481070}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 2
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -11786,7 +11786,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 968360770}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 2
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -13959,7 +13959,7 @@ MonoBehaviour:
   globalFearLevel: 0
   winText: {fileID: 1227750103}
   counter: {fileID: 1626527530}
-  scoreCountdownWaitTime: 3
+  scoreCountdownWaitTime: 5
   currentCountdownTime: 0
   softScore: 0
   loggedScore: 0
@@ -16052,7 +16052,7 @@ PrefabInstance:
     - target: {fileID: 2945445602019238899, guid: b95c7ffe9ddfa464cb571781960af5fa,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -17.324085
+      value: -17.391
       objectReference: {fileID: 0}
     - target: {fileID: 2945445602019238899, guid: b95c7ffe9ddfa464cb571781960af5fa,
         type: 3}
@@ -16249,7 +16249,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1343629999}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 2
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -25233,7 +25233,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2103265485}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 2
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -26103,17 +26103,15 @@ PrefabInstance:
       propertyPath: cameraBuddyBuddy
       value: 
       objectReference: {fileID: 771322768}
-    - target: {fileID: 479318899, guid: e35de8ee5ff9a24428d45bd201e07f97, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.97
+    - target: {fileID: 5122520761410262284, guid: e35de8ee5ff9a24428d45bd201e07f97,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0036847778
       objectReference: {fileID: 0}
-    - target: {fileID: 67127679, guid: e35de8ee5ff9a24428d45bd201e07f97, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.97
-      objectReference: {fileID: 0}
-    - target: {fileID: 67127679, guid: e35de8ee5ff9a24428d45bd201e07f97, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
+    - target: {fileID: 5122520761410262284, guid: e35de8ee5ff9a24428d45bd201e07f97,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.0029846407
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e35de8ee5ff9a24428d45bd201e07f97, type: 3}
