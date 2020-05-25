@@ -25,11 +25,16 @@ public class playerScript : MonoBehaviour
 
     [Header("AI Stuff")]
     public NavMeshObstacle navBlocker;
+
+    [Header("Ability Stuff")]
+    public slimeTrailAbility slimy;
+    public KeyCode toggleSlime;
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>();
         aud = GetComponent<AudioSource>();
+        slimy = GetComponent<slimeTrailAbility>();
     }
 
     // Update is called once per frame
@@ -78,6 +83,19 @@ public class playerScript : MonoBehaviour
                 anim.SetTrigger("scare");
                 aud.pitch = Random.Range(.5f, 1.5f);
                 aud.Play();
+            }
+        }
+
+        //debug slime trail enable/disable
+        if (Input.GetKeyDown(toggleSlime))
+        {
+            if(slimy.weOutHereSliming == false)
+            {
+                slimy.weOutHereSliming = true;
+            }
+            else
+            {
+                slimy.weOutHereSliming = false;
             }
         }
 
