@@ -16,7 +16,7 @@ public class camBuddyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(moveInKey))
+        if (Input.GetKey(moveInKey) || Input.GetAxis("CamVertical") > 0)
         {
             if(meCam.orthographicSize > minSize)
             {
@@ -24,7 +24,7 @@ public class camBuddyScript : MonoBehaviour
             }
 
         }
-        if (Input.GetKey(moveOutKey))
+        if (Input.GetKey(moveOutKey) || Input.GetAxis("CamVertical") < 0)
         {
             if(meCam.orthographicSize < maxSize)
             {
@@ -33,4 +33,5 @@ public class camBuddyScript : MonoBehaviour
 
         }
     }
+
 }

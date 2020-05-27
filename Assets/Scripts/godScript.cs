@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using GameAnalyticsSDK;
+using System;
 public class godScript : MonoBehaviour
 {
     [Header("NPC stuff")]
@@ -17,8 +18,11 @@ public class godScript : MonoBehaviour
     [Header("Score Stuff")]
     public float scoreCountdownWaitTime;
     public float currentCountdownTime;
-    public int softScore, loggedScore, scoreMultiplier;
-    public Text softscoreCounter, ScoreCounter;
+    public float softScore, loggedScore, scoreMultiplier;
+    public int sendScore;
+    public Text softscoreCounter, ScoreCounter, timerText;
+    public TimeSpan gameTime;
+    public float timeScoreMult, timeScoreMultDecay, timeScoreMultMin;
 
     // Start is called before the first frame update
     void Start()
@@ -37,7 +41,7 @@ public class godScript : MonoBehaviour
             {
                 invokedRestart = true;
                 logScore();
-                GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "Test Level", loggedScore);
+                GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "Test Level", sendScore);
                 Invoke("resetGame", 3);
             }
         }
@@ -60,7 +64,20 @@ public class godScript : MonoBehaviour
             softscoreCounter.text = null;
         }
 
+        //timer stuff
+        if (NPCcount > 0)
+        {
+            gameTime += TimeSpan.FromSeconds(Time.deltaTime);
+            timerText.text = gameTime.ToString(@"mm\:ss\.ff");
+            timeScoreMult = timeScoreMult - (Time.deltaTime * timeScoreMultDecay);
+            if (timeScoreMult < timeScoreMultMin)
+            {
+                timeScoreMult = timeScoreMultMin;
+            }
+        }
+
         counter.text = NPCcount.ToString();
+        sendScore = (int) loggedScore;
     }
 
     void resetGame()
@@ -73,7 +90,7 @@ public class godScript : MonoBehaviour
     public void upScore(int scoreAmount, int multAmount)
     {
         scoreMultiplier = scoreMultiplier + multAmount;
-        softScore = softScore + (scoreAmount * scoreMultiplier);
+        softScore = Mathf.Ceil((softScore + (scoreAmount * scoreMultiplier)) * timeScoreMult);
         currentCountdownTime = scoreCountdownWaitTime;
     }
 

@@ -9,15 +9,27 @@ public class playerScript : MonoBehaviour
 {
     Animator anim;
     AudioSource aud;
-    [Header("Inputs")]
+
+    public int monsterType;
+    [Header("Monster 1 Values"), Tooltip("Values for the Wiggly Fella. Essentially default, all rounder character with a special movement option.")]
+    public float monster1MoveSpeed;
+    public float monster1ScareRadius, monster1BlockRadius, monster1SpookDecay;
+
+    [Header("Monster 2 Values"), Tooltip("Values for the Funny Little Ball Fella. A fast little fella who isn't exactly scary but has SPEED abilities to back it up.")]
+    public float monster2MoveSpeed;
+    public float monster2ScareRadius, monster2BlockRadius, monster2SpookDecay;
+
+    [Header("Global Inputs")]
     public KeyCode scareKey;
-    public KeyCode useKey, upKey, downKey, leftKey, rightKey, camLeftKey, camRightKey, resetGameKey;
+    public KeyCode useKey, camLeftKey, camRightKey, resetGameKey;
     public float moveSpeed;
 
     [Header("Spook Mechanics")]
     public bool stealthed;
     public Slider spookOMeter;
     public float spookResource, spookGainRate, spookDiminishRate;
+    public SphereCollider scareRadius;
+    public float scareRadiusMult;
 
     [Header("Camera Stuff")]
     public float camLerpSpeed;
@@ -29,56 +41,52 @@ public class playerScript : MonoBehaviour
     [Header("Ability Stuff")]
     public slimeTrailAbility slimy;
     public KeyCode toggleSlime;
+
+    private bool IsMoving;
+
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>();
         aud = GetComponent<AudioSource>();
         slimy = GetComponent<slimeTrailAbility>();
+
+        if(monsterType == 1)
+        {
+            moveSpeed = monster1MoveSpeed;
+            scareRadius.radius = monster1ScareRadius;
+            scareRadiusMult = monster1BlockRadius;
+            spookDiminishRate = monster1SpookDecay;
+        }
+        if (monsterType == 2)
+        {
+            moveSpeed = monster2MoveSpeed;
+            scareRadius.radius = monster2ScareRadius;
+            scareRadiusMult = monster2BlockRadius;
+            spookDiminishRate = monster2SpookDecay;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        //big fat movement code block
-        if (Input.GetKey(upKey))
-        {
-            transform.rotation = Quaternion.Euler(0, 0 + cameraBuddy.transform.rotation.eulerAngles.y, 0);
-        }
-        if (Input.GetKey(downKey))
-        {
-            transform.rotation = Quaternion.Euler(0, 180 + cameraBuddy.transform.rotation.eulerAngles.y, 0);
-        }
-        if (Input.GetKey(leftKey))
-        {
-            transform.rotation = Quaternion.Euler(0, -90 + cameraBuddy.transform.rotation.eulerAngles.y, 0);
-        }
-        if (Input.GetKey(rightKey))
-        {
-            transform.rotation = Quaternion.Euler(0, 90 + cameraBuddy.transform.rotation.eulerAngles.y, 0);
-        }
-        if (Input.GetKey(upKey) && Input.GetKey(rightKey))
-        {
-            transform.rotation = Quaternion.Euler(0, 45 + cameraBuddy.transform.rotation.eulerAngles.y, 0);
-        }
-        if (Input.GetKey(upKey) && Input.GetKey(leftKey))
-        {
-            transform.rotation = Quaternion.Euler(0, -45 + cameraBuddy.transform.rotation.eulerAngles.y, 0);
-        }
-        if (Input.GetKey(downKey) && Input.GetKey(rightKey))
-        {
-            transform.rotation = Quaternion.Euler(0, 135 + cameraBuddy.transform.rotation.eulerAngles.y, 0);
-        }
-        if (Input.GetKey(downKey) && Input.GetKey(leftKey))
-        {
-            transform.rotation = Quaternion.Euler(0, 225 + cameraBuddy.transform.rotation.eulerAngles.y, 0);
-        }
+        var vert = Input.GetAxisRaw("Vertical");
+        var horiz = Input.GetAxisRaw("Horizontal");
+        Vector3 movement = new Vector3(horiz, 0, vert);
+        IsMoving = movement.magnitude > 0;
+        var rotation = Quaternion.LookRotation(cameraBuddy.transform.forward, Vector3.up);
+
+        var realMove = rotation * movement;
+
+        transform.LookAt(transform.position + realMove);
+
+
         //end big fat movement code block
 
         //lovely actions section
-        if (Input.GetKeyDown(scareKey))
+        if (Input.GetKeyDown(scareKey) || Input.GetButtonDown("Scare"))
         {
-            if(stealthed == false)
+            if (stealthed == false)
             {
                 anim.SetTrigger("scare");
                 aud.pitch = Random.Range(.5f, 1.5f);
@@ -89,7 +97,7 @@ public class playerScript : MonoBehaviour
         //debug slime trail enable/disable
         if (Input.GetKeyDown(toggleSlime))
         {
-            if(slimy.weOutHereSliming == false)
+            if (slimy.weOutHereSliming == false)
             {
                 slimy.weOutHereSliming = true;
             }
@@ -100,11 +108,11 @@ public class playerScript : MonoBehaviour
         }
 
         //camera controls part, this changes the cameraBuddy's Buddy's position so the camera buddy can lerp to it's rotation (it's an easier but slightly messy way OF doing it)
-        if (Input.GetKeyDown(camLeftKey))
+        if (Input.GetKeyDown(camLeftKey) || Input.GetButtonDown("CamLeft"))
         {
             cameraBuddyBuddy.transform.Rotate(0, -90, 0);
         }
-        if (Input.GetKeyDown(camRightKey))
+        if (Input.GetKeyDown(camRightKey) || Input.GetButtonDown("CamRight"))
         {
             cameraBuddyBuddy.transform.Rotate(0, 90, 0);
         }
@@ -141,8 +149,8 @@ public class playerScript : MonoBehaviour
         }
 
         //nav blocker size change based on scariness
-        navBlocker.radius = (spookResource / 3) * 1.7f;
-        float circleVizSize = (spookResource / 3) * 0.1674161f;
+        navBlocker.radius = (spookResource / 3) * scareRadiusMult;
+        float circleVizSize = (spookResource / 3) * scareRadiusMult/10;
         debugCircleVisualizer1.transform.localScale =new Vector3(circleVizSize, circleVizSize, circleVizSize);
 
         spookOMeter.value = spookResource;
@@ -150,7 +158,7 @@ public class playerScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Input.GetKey(upKey) || Input.GetKey(downKey) || Input.GetKey(leftKey) || Input.GetKey(rightKey))
+        if (IsMoving)
         {
             transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
         }
@@ -167,11 +175,14 @@ public class playerScript : MonoBehaviour
         }
         if(other.tag == "mouseHole")
         {
-            if (Input.GetKeyDown(useKey))
+            if(monsterType == 1)
             {
-                mouseHoleScript MSH;
-                MSH = other.GetComponent<mouseHoleScript>();
-                transform.position = new Vector3(MSH.otherMSH.transform.position.x, transform.position.y, MSH.otherMSH.transform.position.z);
+                if (Input.GetKeyDown(useKey) || Input.GetButtonDown("Interact"))
+                {
+                    mouseHoleScript MSH;
+                    MSH = other.GetComponent<mouseHoleScript>();
+                    transform.position = new Vector3(MSH.otherMSH.transform.position.x, transform.position.y, MSH.otherMSH.transform.position.z);
+                }
             }
         }
     }
