@@ -5,27 +5,19 @@ using UnityEngine;
 public class wallHideScript : MonoBehaviour
 {
     MeshRenderer myRenderer;
+    Animator anim;
 
     private void Start()
     {
         myRenderer = GetComponent<MeshRenderer>();
+        anim = GetComponent<Animator>();
     }
 
     private void OnCollisionStay(Collision other)
     {
         if(other.gameObject.tag == "wallDestroyer")
         {
-            myRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
-
-            foreach(Transform childTransform in transform)
-            {
-                MeshRenderer childMeshRenderer;
-                if (childTransform.GetComponent<MeshRenderer>() != null)
-                {
-                    childMeshRenderer = childTransform.GetComponent<MeshRenderer>();
-                    childMeshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
-                }
-            }
+            anim.SetBool("disappear", true);
         }
     }
 
@@ -33,17 +25,7 @@ public class wallHideScript : MonoBehaviour
     {
         if (other.gameObject.tag == "wallDestroyer")
         {
-            myRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
-
-            foreach (Transform childTransform in transform)
-            {
-                MeshRenderer childMeshRenderer;
-                if (childTransform.GetComponent<MeshRenderer>() != null)
-                {
-                    childMeshRenderer = childTransform.GetComponent<MeshRenderer>();
-                    childMeshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
-                }
-            }
+            anim.SetBool("disappear", false);
         }
     }
 }

@@ -8,7 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenuTest.unity
     guid: a96a72b47848ef248b7f47e4805b6bfe
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/slinkscene.unity
     guid: 13b746db863d87d48bdeeb4334dd3bbf
+  - enabled: 1
+    path: Assets/Scenes/FletchersScene.unity
+    guid: 1e7ea2d172deda94bae546f8a7ba5b29
   m_configObjects: {}

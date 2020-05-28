@@ -19,6 +19,6 @@ public class menuScript : MonoBehaviour
 
     public void startTheGame()
     {
-        SceneManager.LoadScene("slinkscene");
+        SceneManager.LoadScene("FletchersScene");
     }
 }

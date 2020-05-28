@@ -84,6 +84,12 @@ public class godScript : MonoBehaviour
             }
         }
 
+        //goto menu stuff
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("MainMenuTest");
+        }
+
         //music mute stuff
         if (Input.GetKeyDown(musicMuteButton))
         {
