@@ -8,11 +8,11 @@ public class circleVisualiserScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(pS.monsterType == 1)
+        if(playerChoice.monsterSelection == playerScript.monsterType.WIGGLYFELLA)
         {
             transform.localScale = new Vector3(0.52f, 0.52f, 0.52f);
         }
-        if(pS.monsterType == 2)
+        if(playerChoice.monsterSelection == playerScript.monsterType.BALLFELLA)
         {
             transform.localScale = new Vector3(0.29f, 0.29f, 0.29f);
         }

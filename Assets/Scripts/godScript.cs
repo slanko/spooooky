@@ -24,11 +24,18 @@ public class godScript : MonoBehaviour
     public TimeSpan gameTime;
     public float timeScoreMult, timeScoreMultDecay, timeScoreMultMin;
 
+    [Header("Audio Stuff")]
+    public KeyCode musicMuteButton;
+    public AudioSource muzik;
+    public float musicVolume;
+    public bool musicMuted;
+
     // Start is called before the first frame update
     void Start()
     {
         GameAnalytics.Initialize();
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, "Test Level");
+        muzik.volume = musicVolume;
     }
 
     // Update is called once per frame
@@ -43,6 +50,7 @@ public class godScript : MonoBehaviour
                 logScore();
                 GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "Test Level", sendScore);
                 Invoke("resetGame", 3);
+                muzik.volume = musicVolume;
             }
         }
         if(currentCountdownTime > 0)
@@ -73,6 +81,21 @@ public class godScript : MonoBehaviour
             if (timeScoreMult < timeScoreMultMin)
             {
                 timeScoreMult = timeScoreMultMin;
+            }
+        }
+
+        //music mute stuff
+        if (Input.GetKeyDown(musicMuteButton))
+        {
+            if(musicMuted == false)
+            {
+                muzik.volume = 0;
+                musicMuted = true;
+            }
+            else
+            {
+                muzik.volume = musicVolume;
+                musicMuted = false;
             }
         }
 

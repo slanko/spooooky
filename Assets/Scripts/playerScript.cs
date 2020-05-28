@@ -10,19 +10,22 @@ public class playerScript : MonoBehaviour
     Animator anim;
     AudioSource aud;
 
-    public int monsterType;
+    public monsterType monsterSelection;
     [Header("Monster 1 Values"), Tooltip("Values for the Wiggly Fella. Essentially default, all rounder character with a special movement option.")]
     public float monster1MoveSpeed;
     public float monster1ScareRadius, monster1BlockRadius, monster1SpookDecay;
+    public GameObject monster1Model;
 
     [Header("Monster 2 Values"), Tooltip("Values for the Funny Little Ball Fella. A fast little fella who isn't exactly scary but has SPEED abilities to back it up.")]
     public float monster2MoveSpeed;
     public float monster2ScareRadius, monster2BlockRadius, monster2SpookDecay;
+    public GameObject monster2Model;
 
     [Header("Global Inputs")]
     public KeyCode scareKey;
     public KeyCode useKey, camLeftKey, camRightKey, resetGameKey;
     public float moveSpeed;
+    private float moveSpeedFactor; 
 
     [Header("Spook Mechanics")]
     public bool stealthed;
@@ -44,6 +47,14 @@ public class playerScript : MonoBehaviour
 
     private bool IsMoving;
 
+    [System.Serializable]
+    public enum monsterType
+    {
+        WIGGLYFELLA,
+        BALLFELLA,
+        SNAKEFELLA,
+        CORNFELLA
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -51,20 +62,26 @@ public class playerScript : MonoBehaviour
         aud = GetComponent<AudioSource>();
         slimy = GetComponent<slimeTrailAbility>();
 
-        if(monsterType == 1)
+        if(playerChoice.monsterSelection == monsterType.WIGGLYFELLA)
         {
             moveSpeed = monster1MoveSpeed;
             scareRadius.radius = monster1ScareRadius;
             scareRadiusMult = monster1BlockRadius;
             spookDiminishRate = monster1SpookDecay;
+            monster1Model.SetActive(true);
+            monster2Model.SetActive(false);
         }
-        if (monsterType == 2)
+        if (playerChoice.monsterSelection == monsterType.BALLFELLA)
         {
             moveSpeed = monster2MoveSpeed;
             scareRadius.radius = monster2ScareRadius;
             scareRadiusMult = monster2BlockRadius;
             spookDiminishRate = monster2SpookDecay;
+            monster1Model.SetActive(false);
+            monster2Model.SetActive(true);
         }
+
+        moveSpeedFactor = 1;
     }
 
     // Update is called once per frame
@@ -95,17 +112,21 @@ public class playerScript : MonoBehaviour
         }
 
         //debug slime trail enable/disable
-        if (Input.GetKeyDown(toggleSlime))
+        if(playerChoice.monsterSelection == monsterType.SNAKEFELLA)
         {
-            if (slimy.weOutHereSliming == false)
+            if (Input.GetKeyDown(toggleSlime))
             {
-                slimy.weOutHereSliming = true;
-            }
-            else
-            {
-                slimy.weOutHereSliming = false;
+                if (slimy.weOutHereSliming == false)
+                {
+                    slimy.weOutHereSliming = true;
+                }
+                else
+                {
+                    slimy.weOutHereSliming = false;
+                }
             }
         }
+
 
         //camera controls part, this changes the cameraBuddy's Buddy's position so the camera buddy can lerp to it's rotation (it's an easier but slightly messy way OF doing it)
         if (Input.GetKeyDown(camLeftKey) || Input.GetButtonDown("CamLeft"))
@@ -160,11 +181,16 @@ public class playerScript : MonoBehaviour
     {
         if (IsMoving)
         {
-            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+            transform.Translate(Vector3.forward * (moveSpeed * moveSpeedFactor) * Time.deltaTime);
         }
         cameraBuddy.transform.position = Vector3.Lerp(cameraBuddy.transform.position, transform.position, camLerpSpeed);
         cameraBuddy.transform.rotation = Quaternion.Slerp(cameraBuddy.transform.rotation, cameraBuddyBuddy.transform.rotation, camLerpSpeed);
         cameraBuddyBuddy.transform.position = transform.position;
+    }
+
+    public void setSpeedFactor(float factor)
+    {
+        moveSpeedFactor = factor;
     }
 
     private void OnTriggerStay(Collider other)
@@ -175,7 +201,7 @@ public class playerScript : MonoBehaviour
         }
         if(other.tag == "mouseHole")
         {
-            if(monsterType == 1)
+            if(playerChoice.monsterSelection == monsterType.WIGGLYFELLA)
             {
                 if (Input.GetKeyDown(useKey) || Input.GetButtonDown("Interact"))
                 {
