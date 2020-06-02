@@ -8,11 +8,12 @@ public class NPCscript : MonoBehaviour
     godScript god;
     NavMeshAgent nav;
     public float fearAmount, fearDiminishRate, moveTimeMin, moveTimeMax, moveRangeMin, moveRangeMax;
-    public bool scared, resetMove, screamed, seenPlayer;
+    public bool scared, resetMove, screamed, seenPlayer, subtractedFromSightCount;
     public GameObject exit, buddyPlayer, myScareSphere;
     playerScript pS;
     public ParticleSystem particlez;
     AudioSource aud;
+    LineRenderer myLine;
 
     [Header("Score Stuff")]
     public int pointValue;
@@ -27,6 +28,7 @@ public class NPCscript : MonoBehaviour
         aud = GetComponent<AudioSource>();
         pS = GameObject.Find("Player").GetComponent<playerScript>();
         buddyPlayer = GameObject.Find("Player");
+        myLine = GetComponent<LineRenderer>();
         god.NPCcount++;
     }
 
@@ -77,7 +79,11 @@ public class NPCscript : MonoBehaviour
                     if(seenPlayer == true)
                     {
                         seenPlayer = false;
-                        god.sightLines--;
+                        if(subtractedFromSightCount == false)
+                        {
+                            god.sightLines--;
+                        }
+                        myLine.enabled = false;
                     }
                 }
                 else
@@ -85,14 +91,24 @@ public class NPCscript : MonoBehaviour
                     Debug.DrawRay(transform.position, (buddyPlayer.transform.position - transform.position), Color.yellow);
                     if(seenPlayer == false)
                     {
+                        subtractedFromSightCount = false;
                         god.sightLines++;
                         seenPlayer = true;
                     }
+                    myLine.enabled = true;
+                    myLine.SetPosition(0, transform.position);
+                    myLine.SetPosition(1, pS.gameObject.transform.position);
                 }
             }
             else
             {
                 Debug.DrawRay(transform.position, (buddyPlayer.transform.position - transform.position), Color.blue);
+                myLine.enabled = false;
+                if(subtractedFromSightCount == false)
+                {
+                    god.sightLines--;
+                    subtractedFromSightCount = true;
+                }
             }
 
         }
