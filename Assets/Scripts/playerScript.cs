@@ -7,8 +7,9 @@ using UnityEngine.AI;
 
 public class playerScript : MonoBehaviour
 {
-    Animator anim;
+    Animator anim, anim2;
     AudioSource aud;
+    godScript god;
 
     public monsterType monsterSelection;
     [Header("Monster 1 Values"), Tooltip("Values for the Wiggly Fella. Essentially default, all rounder character with a special movement option.")]
@@ -37,6 +38,7 @@ public class playerScript : MonoBehaviour
     [Header("Camera Stuff")]
     public float camLerpSpeed;
     public GameObject cameraBuddy, cameraBuddyBuddy, debugCircleVisualizer1;
+    bool camStickRotated;
 
     [Header("AI Stuff")]
     public NavMeshObstacle navBlocker;
@@ -58,6 +60,7 @@ public class playerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        god = GameObject.Find("GOD").GetComponent<godScript>();
         anim = GetComponent<Animator>();
         aud = GetComponent<AudioSource>();
         slimy = GetComponent<slimeTrailAbility>();
@@ -70,6 +73,7 @@ public class playerScript : MonoBehaviour
             spookDiminishRate = monster1SpookDecay;
             monster1Model.SetActive(true);
             monster2Model.SetActive(false);
+            anim2 = monster1Model.GetComponent<Animator>();
         }
         if (playerChoice.monsterSelection == monsterType.BALLFELLA)
         {
@@ -79,9 +83,11 @@ public class playerScript : MonoBehaviour
             spookDiminishRate = monster2SpookDecay;
             monster1Model.SetActive(false);
             monster2Model.SetActive(true);
+            anim2 = monster2Model.GetComponent<Animator>();
         }
 
         moveSpeedFactor = 1;
+        anim2.speed = 3;
     }
 
     // Update is called once per frame
@@ -100,12 +106,23 @@ public class playerScript : MonoBehaviour
 
         //end big fat movement code block
 
+        //movement animations bit
+        if(IsMoving == true)
+        {
+            anim2.SetBool("walking", true);
+        }
+        else
+        {
+            anim2.SetBool("walking", false);
+        }
+
         //lovely actions section
         if (Input.GetKeyDown(scareKey) || Input.GetButtonDown("Scare"))
         {
             if (stealthed == false)
             {
                 anim.SetTrigger("scare");
+                anim2.SetTrigger("spook");
                 aud.pitch = Random.Range(.5f, 1.5f);
                 aud.Play();
             }
@@ -129,14 +146,33 @@ public class playerScript : MonoBehaviour
 
 
         //camera controls part, this changes the cameraBuddy's Buddy's position so the camera buddy can lerp to it's rotation (it's an easier but slightly messy way OF doing it)
-        if (Input.GetKeyDown(camLeftKey) || Input.GetButtonDown("CamLeft"))
+        if (Input.GetKeyDown(camLeftKey))
         {
             cameraBuddyBuddy.transform.Rotate(0, -90, 0);
         }
-        if (Input.GetKeyDown(camRightKey) || Input.GetButtonDown("CamRight"))
+        if (Input.GetKeyDown(camRightKey))
         {
             cameraBuddyBuddy.transform.Rotate(0, 90, 0);
         }
+
+        if(camStickRotated == false)
+        {
+            if (Input.GetAxis("CamHorizontal") > 0.5)
+            {
+                cameraBuddyBuddy.transform.Rotate(0, -90, 0);
+            }
+            if (Input.GetAxis("CamHorizontal") < -0.5)
+            {
+                cameraBuddyBuddy.transform.Rotate(0, 90, 0);
+            }
+            camStickRotated = true;
+        }
+
+        if (Input.GetAxis("CamHorizontal") < 0.4 && Input.GetAxis("CamHorizontal") > -0.4)
+        {
+            camStickRotated = false;
+        }
+
 
         //reset game input
         if (Input.GetKeyDown(resetGameKey))
@@ -167,6 +203,16 @@ public class playerScript : MonoBehaviour
             {
                 spookResource = spookOMeter.maxValue;
             }
+        }
+
+        //line-of-sight stealthy stuffe
+        if(god.sightLines <= 0)
+        {
+            stealthed = true;
+        }
+        else
+        {
+            stealthed = false;
         }
 
         //nav blocker size change based on scariness

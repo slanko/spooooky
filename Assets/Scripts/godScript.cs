@@ -9,6 +9,7 @@ public class godScript : MonoBehaviour
 {
     [Header("NPC stuff")]
     public float NPCcount, globalFearLevel;
+    public int sightLines = 0;
 
     [Header("Game Control Stuff")]
     public GameObject winText;
@@ -91,7 +92,7 @@ public class godScript : MonoBehaviour
         }
 
         //music mute stuff
-        if (Input.GetKeyDown(musicMuteButton))
+        if (Input.GetKeyDown(musicMuteButton) || Input.GetButtonDown("ControllerBack"))
         {
             if(musicMuted == false)
             {

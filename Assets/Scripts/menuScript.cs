@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class menuScript : MonoBehaviour
 {
     // Start is called before the first frame update
+    public string levelToLoad;
     void Start()
     {
         
@@ -19,6 +20,6 @@ public class menuScript : MonoBehaviour
 
     public void startTheGame()
     {
-        SceneManager.LoadScene("FletchersScene");
+        SceneManager.LoadScene(levelToLoad);
     }
 }

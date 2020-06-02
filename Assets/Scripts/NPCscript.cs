@@ -8,7 +8,7 @@ public class NPCscript : MonoBehaviour
     godScript god;
     NavMeshAgent nav;
     public float fearAmount, fearDiminishRate, moveTimeMin, moveTimeMax, moveRangeMin, moveRangeMax;
-    public bool scared, resetMove, screamed;
+    public bool scared, resetMove, screamed, seenPlayer;
     public GameObject exit, buddyPlayer, myScareSphere;
     playerScript pS;
     public ParticleSystem particlez;
@@ -74,10 +74,20 @@ public class NPCscript : MonoBehaviour
                 if (rayHit.collider.gameObject.tag != "Player")
                 {
                     Debug.DrawRay(transform.position, (buddyPlayer.transform.position - transform.position), Color.red);
+                    if(seenPlayer == true)
+                    {
+                        seenPlayer = false;
+                        god.sightLines--;
+                    }
                 }
                 else
                 {
                     Debug.DrawRay(transform.position, (buddyPlayer.transform.position - transform.position), Color.yellow);
+                    if(seenPlayer == false)
+                    {
+                        god.sightLines++;
+                        seenPlayer = true;
+                    }
                 }
             }
             else
@@ -122,6 +132,10 @@ public class NPCscript : MonoBehaviour
         {
             god.NPCcount--;
             god.upScore(pointValue, multiplierChange);
+            if(seenPlayer == true)
+            {
+                god.sightLines--;
+            }
             Destroy(this.gameObject);
         }
 
