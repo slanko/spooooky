@@ -100,7 +100,7 @@ ScriptedImporter:
         float: 1
       colors:
       - name: _Color
-        color: {r: 1, g: 1, b: 1, a: 1}
+        color: {r: 0.45937166, g: 0.8773585, b: 0.7646388, a: 1}
       - name: _EmissionColor
         color: {r: 0, g: 0, b: 0, a: 1}
     outputDescList:
