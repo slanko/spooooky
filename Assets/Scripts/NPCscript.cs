@@ -15,6 +15,7 @@ public class NPCscript : MonoBehaviour
     AudioSource aud;
     LineRenderer myLine;
 
+
     [Header("Score Stuff")]
     public int pointValue;
     public int multiplierChange;
@@ -79,10 +80,7 @@ public class NPCscript : MonoBehaviour
                     if(seenPlayer == true)
                     {
                         seenPlayer = false;
-                        if(subtractedFromSightCount == false)
-                        {
-                            god.sightLines--;
-                        }
+                        god.deregisterObserver(this.gameObject);
                         myLine.enabled = false;
                     }
                 }
@@ -91,8 +89,7 @@ public class NPCscript : MonoBehaviour
                     Debug.DrawRay(transform.position, (buddyPlayer.transform.position - transform.position), Color.yellow);
                     if(seenPlayer == false)
                     {
-                        subtractedFromSightCount = false;
-                        god.sightLines++;
+                        god.registerObserver(this.gameObject);
                         seenPlayer = true;
                     }
                     myLine.enabled = true;
@@ -104,11 +101,7 @@ public class NPCscript : MonoBehaviour
             {
                 Debug.DrawRay(transform.position, (buddyPlayer.transform.position - transform.position), Color.blue);
                 myLine.enabled = false;
-                if(subtractedFromSightCount == false)
-                {
-                    god.sightLines--;
-                    subtractedFromSightCount = true;
-                }
+                god.deregisterObserver(this.gameObject);
             }
 
         }
@@ -122,7 +115,6 @@ public class NPCscript : MonoBehaviour
             //shoot a raycast out to determine the player distance, and get a raycast hit on whatever it hits
             if (Physics.Raycast(transform.position, buddyPlayer.transform.position - transform.position, out var rayHit, Vector3.Distance(transform.position, buddyPlayer.transform.position)))
             {
-
                 if(rayHit.collider.gameObject.tag != "Player")
                 {
                     Debug.DrawRay(transform.position, (buddyPlayer.transform.position - transform.position), Color.red, 5f);
@@ -148,10 +140,7 @@ public class NPCscript : MonoBehaviour
         {
             god.NPCcount--;
             god.upScore(pointValue, multiplierChange);
-            if(seenPlayer == true)
-            {
-                god.sightLines--;
-            }
+            god.deregisterObserver(this.gameObject);
             Destroy(this.gameObject);
         }
 

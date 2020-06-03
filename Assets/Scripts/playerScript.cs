@@ -47,6 +47,10 @@ public class playerScript : MonoBehaviour
     public slimeTrailAbility slimy;
     public KeyCode toggleSlime;
 
+    [Header("Fun Stuff")]
+    public bool firstPersonMode;
+    public GameObject firstPersonCam;
+
     private bool IsMoving;
 
     [System.Serializable]
@@ -97,14 +101,27 @@ public class playerScript : MonoBehaviour
         var horiz = Input.GetAxisRaw("Horizontal");
         Vector3 movement = new Vector3(horiz, 0, vert);
         IsMoving = movement.magnitude > 0;
-        var rotation = Quaternion.LookRotation(cameraBuddy.transform.forward, Vector3.up);
+        var rotation = new Quaternion(0,0,0,0);
+        if (firstPersonMode == false)
+        {
+            rotation = Quaternion.LookRotation(cameraBuddy.transform.forward, Vector3.up);
+        }
 
         var realMove = rotation * movement;
 
         transform.LookAt(transform.position + realMove);
-
-
         //end big fat movement code block
+
+        //dumb first person mode start
+        if(firstPersonMode == true)
+        {
+            firstPersonCam.SetActive(true);
+        }
+        else
+        {
+            firstPersonCam.SetActive(false);
+        }
+
 
         //movement animations bit
         if(IsMoving == true)
@@ -206,14 +223,7 @@ public class playerScript : MonoBehaviour
         }
 
         //line-of-sight stealthy stuffe
-        if(god.sightLines <= 0)
-        {
-            stealthed = true;
-        }
-        else
-        {
-            stealthed = false;
-        }
+        stealthed = !god.isSeen();
 
         //nav blocker size change based on scariness
         navBlocker.radius = (spookResource / 3) * scareRadiusMult;

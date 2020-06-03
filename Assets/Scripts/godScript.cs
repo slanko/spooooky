@@ -9,7 +9,12 @@ public class godScript : MonoBehaviour
 {
     [Header("NPC stuff")]
     public float NPCcount, globalFearLevel;
-    public int sightLines = 0;
+
+    [SerializeField]
+    private int sightLines = 0;
+    private List<GameObject> registeredObservers = new List<GameObject>();
+    
+
 
     [Header("Game Control Stuff")]
     public GameObject winText;
@@ -129,5 +134,22 @@ public class godScript : MonoBehaviour
         loggedScore = loggedScore + softScore;
         softScore = 0;
         scoreMultiplier = 0;
+    }
+
+    public void registerObserver(GameObject observer)
+    {
+        registeredObservers.Add(observer);
+        sightLines = registeredObservers.Count;
+    }
+
+    public void deregisterObserver(GameObject observer)
+    {
+        registeredObservers.Remove(observer);
+        sightLines = registeredObservers.Count;
+    }
+
+    public bool isSeen()
+    {
+        return sightLines > 0;
     }
 }
