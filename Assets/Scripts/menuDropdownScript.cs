@@ -45,7 +45,7 @@ public class menuDropdownScript : MonoBehaviour
         {
             playerChoice.monsterSelection = playerScript.monsterType.CORNFELLA;
         }
-        SceneManager.LoadScene("slinkscene");
+        SceneManager.LoadScene("FletchersScene");
     }
 
 }
