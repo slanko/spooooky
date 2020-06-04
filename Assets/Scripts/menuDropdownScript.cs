@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class menuDropdownScript : MonoBehaviour
 {
-    Dropdown droppy;
     private void Start()
     {
-        droppy = GetComponent<Dropdown>();
+        /* 
         if(playerChoice.monsterSelection == playerScript.monsterType.WIGGLYFELLA)
         {
             droppy.value = 0;
@@ -25,25 +25,27 @@ public class menuDropdownScript : MonoBehaviour
         {
             droppy.value = 3;
         }
+        */
     }
-    public void monsterSelect()
+    public void monsterSelect(int monsterNum)
     {
-        if(droppy.value == 0)
+        if(monsterNum == 0)
         {
             playerChoice.monsterSelection = playerScript.monsterType.WIGGLYFELLA;
         }
-        if (droppy.value == 1)
+        if (monsterNum == 1)
         {
             playerChoice.monsterSelection = playerScript.monsterType.BALLFELLA;
         }
-        if (droppy.value == 2)
+        if (monsterNum == 2)
         {
             playerChoice.monsterSelection = playerScript.monsterType.SNAKEFELLA;
         }
-        if (droppy.value == 3)
+        if (monsterNum == 3)
         {
             playerChoice.monsterSelection = playerScript.monsterType.CORNFELLA;
         }
+        SceneManager.LoadScene("slinkscene");
     }
 
 }
