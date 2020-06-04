@@ -9,6 +9,22 @@ public class menuDropdownScript : MonoBehaviour
     private void Start()
     {
         droppy = GetComponent<Dropdown>();
+        if(playerChoice.monsterSelection == playerScript.monsterType.WIGGLYFELLA)
+        {
+            droppy.value = 0;
+        }
+        if (playerChoice.monsterSelection == playerScript.monsterType.BALLFELLA)
+        {
+            droppy.value = 1;
+        }
+        if (playerChoice.monsterSelection == playerScript.monsterType.SNAKEFELLA)
+        {
+            droppy.value = 2;
+        }
+        if (playerChoice.monsterSelection == playerScript.monsterType.CORNFELLA)
+        {
+            droppy.value = 3;
+        }
     }
     public void monsterSelect()
     {

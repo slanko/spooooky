@@ -11,6 +11,8 @@ TagManager:
   - scareSphere
   - mouseHole
   - postProcessing
+  - furniture
+  - NPC
   layers:
   - Default
   - TransparentFX

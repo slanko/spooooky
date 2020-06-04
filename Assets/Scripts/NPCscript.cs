@@ -110,7 +110,7 @@ public class NPCscript : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //check if the other tag is a scary radius
-        if(other.tag == "scary")
+        if(other.tag == "scary" || other.tag == "scareSphereAlt")
         {
             //shoot a raycast out to determine the player distance, and get a raycast hit on whatever it hits
             if (Physics.Raycast(transform.position, buddyPlayer.transform.position - transform.position, out var rayHit, Vector3.Distance(transform.position, buddyPlayer.transform.position)))
@@ -152,16 +152,30 @@ public class NPCscript : MonoBehaviour
             }
             else
             {
-                NPCscript otherNPCbrain;
-                otherNPCbrain = other.gameObject.GetComponentInParent<NPCscript>();
-                if(otherNPCbrain.scared == true)
+                if (other.transform.parent == null)
                 {
-                    fearAmount = otherNPCbrain.fearAmount;
+                    scareSphereScript scareSphere = other.GetComponent<scareSphereScript>();
+                    fearAmount = scareSphere.scarinessLevel;
                     if (screamed == false)
                     {
                         aud.pitch = Random.Range(1f, 3f);
                         aud.Play();
                         screamed = true;
+                    }
+                }
+                else if(other.transform.parent.tag == "NPC")
+                {
+                    NPCscript otherNPCbrain;
+                    otherNPCbrain = other.gameObject.GetComponentInParent<NPCscript>();
+                    if (otherNPCbrain.scared == true)
+                    {
+                        fearAmount = otherNPCbrain.fearAmount;
+                        if (screamed == false)
+                        {
+                            aud.pitch = Random.Range(1f, 3f);
+                            aud.Play();
+                            screamed = true;
+                        }
                     }
                 }
             }

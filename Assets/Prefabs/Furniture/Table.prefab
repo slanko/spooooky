@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 8326677447383616010}
   m_Layer: 0
   m_Name: Table
-  m_TagString: Untagged
+  m_TagString: furniture
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8

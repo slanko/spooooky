@@ -12,15 +12,25 @@ public class playerScript : MonoBehaviour
     godScript god;
 
     public monsterType monsterSelection;
-    [Header("Monster 1 Values"), Tooltip("Values for the Wiggly Fella. Essentially default, all rounder character with a special movement option.")]
+    [Header("Wiggly Fella Values"), Tooltip("Values for the Wiggly Fella. Essentially default, all rounder character with a special movement option.")]
     public float monster1MoveSpeed;
-    public float monster1ScareRadius, monster1BlockRadius, monster1SpookDecay;
+    public float monster1ScareRadius, monster1BlockRadius, monster1SpookGain, monster1SpookDecay;
     public GameObject monster1Model;
 
-    [Header("Monster 2 Values"), Tooltip("Values for the Funny Little Ball Fella. A fast little fella who isn't exactly scary but has SPEED abilities to back it up.")]
+    [Header("Ball Fella Values"), Tooltip("Values for the Funny Little Ball Fella. A fast little fella who isn't exactly scary but has SPEED abilities to back it up.")]
     public float monster2MoveSpeed;
-    public float monster2ScareRadius, monster2BlockRadius, monster2SpookDecay;
+    public float monster2ScareRadius, monster2BlockRadius, monster2SpookGain, monster2SpookDecay;
     public GameObject monster2Model;
+
+    [Header("Snake Fella Values"), Tooltip("Values for the Snake Fella. ")]
+    public float monster3MoveSpeed;
+    public float monster3ScareRadius, monster3BlockRadius, monster3SpookGain, monster3SpookDecay;
+    public GameObject monster3Model;
+
+    [Header("Corn Fella Values"), Tooltip("Values for the Snake Fella. ")]
+    public float monster4MoveSpeed;
+    public float monster4ScareRadius, monster4BlockRadius, monster4SpookGain, monster4SpookDecay;
+    public GameObject monster4Model;
 
     [Header("Global Inputs")]
     public KeyCode scareKey;
@@ -74,9 +84,12 @@ public class playerScript : MonoBehaviour
             moveSpeed = monster1MoveSpeed;
             scareRadius.radius = monster1ScareRadius;
             scareRadiusMult = monster1BlockRadius;
+            spookGainRate = monster1SpookGain;
             spookDiminishRate = monster1SpookDecay;
             monster1Model.SetActive(true);
             monster2Model.SetActive(false);
+            monster3Model.SetActive(false);
+            monster4Model.SetActive(false);
             anim2 = monster1Model.GetComponent<Animator>();
         }
         if (playerChoice.monsterSelection == monsterType.BALLFELLA)
@@ -84,10 +97,39 @@ public class playerScript : MonoBehaviour
             moveSpeed = monster2MoveSpeed;
             scareRadius.radius = monster2ScareRadius;
             scareRadiusMult = monster2BlockRadius;
+            spookGainRate = monster2SpookGain;
             spookDiminishRate = monster2SpookDecay;
             monster1Model.SetActive(false);
             monster2Model.SetActive(true);
+            monster3Model.SetActive(false);
+            monster4Model.SetActive(false);
             anim2 = monster2Model.GetComponent<Animator>();
+        }
+        if (playerChoice.monsterSelection == monsterType.SNAKEFELLA)
+        {
+            moveSpeed = monster3MoveSpeed;
+            scareRadius.radius = monster3ScareRadius;
+            scareRadiusMult = monster3BlockRadius;
+            spookGainRate = monster3SpookGain;
+            spookDiminishRate = monster3SpookDecay;
+            monster1Model.SetActive(false);
+            monster2Model.SetActive(false);
+            monster3Model.SetActive(true);
+            monster4Model.SetActive(false);
+            anim2 = monster3Model.GetComponent<Animator>();
+        }
+        if (playerChoice.monsterSelection == monsterType.CORNFELLA)
+        {
+            moveSpeed = monster4MoveSpeed;
+            scareRadius.radius = monster4ScareRadius;
+            scareRadiusMult = monster4BlockRadius;
+            spookGainRate = monster4SpookGain;
+            spookDiminishRate = monster4SpookDecay;
+            monster1Model.SetActive(false);
+            monster2Model.SetActive(false);
+            monster3Model.SetActive(false);
+            monster4Model.SetActive(true);
+            anim2 = monster4Model.GetComponent<Animator>();
         }
 
         moveSpeedFactor = 1;
