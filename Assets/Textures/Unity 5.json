@@ -33,7 +33,7 @@
         }
     },
     "texturesets": {
-        "initialShadingGroup": {
+        "lambert2": {
             "shader": "Main shader"
         }
     }
