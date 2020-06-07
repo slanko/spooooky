@@ -36,12 +36,26 @@ public class godScript : MonoBehaviour
     public float musicVolume;
     public bool musicMuted;
 
+    [Header("Lighting Stuff")]
+    [SerializeField]
+    private GameObject[] sceneLighting;
+    [Header("World Lighting Colours")]
+    public Color wigglyFellaWorldColour;
+    public Color ballFellaWorldColour, snakeFellaWorldColour, cornFellaWorldColour;
+    [Header("Ambient Colours"), ColorUsage(true, true)]
+    public Color wigglyAmbientColour;
+    [ColorUsage(true, true)]
+    public Color ballAmbientColour, snakeAmbientColour, cornAmbientColour;
+    [Header("Skyboxes")]
+    public Material wigglySkybox;
+    public Material ballSkybox, snakeSkybox, cornSkybox;
     // Start is called before the first frame update
     void Start()
     {
         GameAnalytics.Initialize();
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, "Test Level");
         muzik.volume = musicVolume;
+        setLightColour();
     }
 
     // Update is called once per frame
@@ -58,6 +72,10 @@ public class godScript : MonoBehaviour
                 Invoke("resetGame", 3);
                 muzik.volume = musicVolume;
             }
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            setLightColour();
         }
         if(currentCountdownTime > 0)
         {
@@ -151,5 +169,40 @@ public class godScript : MonoBehaviour
     public bool isSeen()
     {
         return sightLines > 0;
+    }
+
+    void setLightColour()
+    {
+        var currentColour = new Color();
+
+        if(playerChoice.monsterSelection == playerScript.monsterType.WIGGLYFELLA)
+        {
+            currentColour = wigglyFellaWorldColour;
+            RenderSettings.skybox = wigglySkybox;
+            RenderSettings.ambientLight = wigglyAmbientColour;
+        }
+        if(playerChoice.monsterSelection == playerScript.monsterType.BALLFELLA)
+        {
+            currentColour = ballFellaWorldColour;
+            RenderSettings.skybox = ballSkybox;
+            RenderSettings.ambientLight = ballAmbientColour;
+        }
+        if (playerChoice.monsterSelection == playerScript.monsterType.SNAKEFELLA)
+        {
+            currentColour = snakeFellaWorldColour;
+            RenderSettings.skybox = snakeSkybox;
+            RenderSettings.ambientLight = snakeAmbientColour;
+        }
+        if (playerChoice.monsterSelection == playerScript.monsterType.CORNFELLA)
+        {
+            currentColour = cornFellaWorldColour;
+            RenderSettings.skybox = cornSkybox;
+            RenderSettings.ambientLight = cornAmbientColour;
+        }
+        foreach (var scrundler in sceneLighting)
+        {
+            var lightBuddy = scrundler.GetComponent<Light>();
+            lightBuddy.color = currentColour;
+        }
     }
 }

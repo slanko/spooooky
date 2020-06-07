@@ -14,6 +14,7 @@ public class NPCscript : MonoBehaviour
     public ParticleSystem particlez;
     AudioSource aud;
     LineRenderer myLine;
+    public LayerMask validLayers;
 
 
     [Header("Score Stuff")]
@@ -70,7 +71,7 @@ public class NPCscript : MonoBehaviour
             }
         }
 
-        if (Physics.Raycast(transform.position, buddyPlayer.transform.position - transform.position, out var rayHit, Vector3.Distance(transform.position, buddyPlayer.transform.position)))
+        if (Physics.Raycast(transform.position, buddyPlayer.transform.position - transform.position, out var rayHit, Vector3.Distance(transform.position, buddyPlayer.transform.position), validLayers))
         {
             if(scared == false)
             {
@@ -93,8 +94,10 @@ public class NPCscript : MonoBehaviour
                         seenPlayer = true;
                     }
                     myLine.enabled = true;
-                    myLine.SetPosition(0, transform.position);
-                    myLine.SetPosition(1, pS.gameObject.transform.position);
+                    for(int i = 0; i < 10; i++)
+                    {
+                        myLine.SetPosition(i, Vector3.Lerp(transform.position, pS.gameObject.transform.position, i / 10f)); ;
+                    }
                 }
             }
             else

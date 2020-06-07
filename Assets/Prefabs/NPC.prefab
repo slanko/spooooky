@@ -4868,6 +4868,9 @@ MonoBehaviour:
   buddyPlayer: {fileID: 0}
   myScareSphere: {fileID: 6092887409725285028}
   particlez: {fileID: 4663760141495050037}
+  validLayers:
+    serializedVersion: 2
+    m_Bits: 9216
   pointValue: 100
   multiplierChange: 1
 --- !u!136 &2093040227294930585
@@ -4895,10 +4898,10 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.8
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 250
   avoidancePriority: 50
   m_AngularSpeed: 7200
-  m_StoppingDistance: 0
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -5059,6 +5062,14 @@ LineRenderer:
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.1
@@ -5079,10 +5090,10 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 0}
-      key1: {r: 1, g: 1, b: 1, a: 1}
-      key2: {r: 0, g: 0, b: 0, a: 1}
-      key3: {r: 0, g: 0, b: 0, a: 0}
+      key0: {r: 1, g: 0.8309138, b: 0.21226418, a: 0}
+      key1: {r: 1, g: 0.83137256, b: 0.21568628, a: 0}
+      key2: {r: 0, g: 0, b: 0, a: 0.5882353}
+      key3: {r: 0, g: 0, b: 0, a: 0.5882353}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
       key6: {r: 0, g: 0, b: 0, a: 0}
@@ -5097,15 +5108,15 @@ LineRenderer:
       ctime7: 0
       atime0: 0
       atime1: 6554
-      atime2: 58982
-      atime3: 65535
-      atime4: 0
-      atime5: 0
+      atime2: 19661
+      atime3: 45875
+      atime4: 58982
+      atime5: 65535
       atime6: 0
       atime7: 0
       m_Mode: 0
       m_NumColorKeys: 2
-      m_NumAlphaKeys: 4
+      m_NumAlphaKeys: 6
     numCornerVertices: 0
     numCapVertices: 5
     alignment: 0

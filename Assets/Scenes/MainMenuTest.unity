@@ -775,6 +775,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c8c20a4dbeb9d3499648db9cd34273e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelToLoad: slinkscene
 --- !u!1 &358748809
 GameObject:
   m_ObjectHideFlags: 0

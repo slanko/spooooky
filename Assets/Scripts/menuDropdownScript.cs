@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class menuDropdownScript : MonoBehaviour
 {
+    public string levelToLoad;
     private void Start()
     {
         /* 
@@ -45,7 +46,7 @@ public class menuDropdownScript : MonoBehaviour
         {
             playerChoice.monsterSelection = playerScript.monsterType.CORNFELLA;
         }
-        SceneManager.LoadScene("FletchersScene");
+        SceneManager.LoadScene(levelToLoad);
     }
 
 }
