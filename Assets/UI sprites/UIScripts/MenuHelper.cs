@@ -19,6 +19,9 @@ public class MenuHelper : MonoBehaviour
         Exit.menuTrigger2();
     }
 
-    
-    
+    public void Canvas3()
+    {
+        Exit.menuTrigger3();
+    }
+
 }
