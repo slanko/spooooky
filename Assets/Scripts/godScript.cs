@@ -49,6 +49,9 @@ public class godScript : MonoBehaviour
     [Header("Skyboxes")]
     public Material wigglySkybox;
     public Material ballSkybox, snakeSkybox, cornSkybox;
+    [Header("Environment Reflections")]
+    public Cubemap wigglerCubemap;
+    public Cubemap ballCubemap, snakeCubemap, cornCubemap;
     // Start is called before the first frame update
     void Start()
     {
@@ -180,24 +183,28 @@ public class godScript : MonoBehaviour
             currentColour = wigglyFellaWorldColour;
             RenderSettings.skybox = wigglySkybox;
             RenderSettings.ambientLight = wigglyAmbientColour;
+            RenderSettings.customReflection = wigglerCubemap;
         }
         if(playerChoice.monsterSelection == playerScript.monsterType.BALLFELLA)
         {
             currentColour = ballFellaWorldColour;
             RenderSettings.skybox = ballSkybox;
             RenderSettings.ambientLight = ballAmbientColour;
+            RenderSettings.customReflection = ballCubemap;
         }
         if (playerChoice.monsterSelection == playerScript.monsterType.SNAKEFELLA)
         {
             currentColour = snakeFellaWorldColour;
             RenderSettings.skybox = snakeSkybox;
             RenderSettings.ambientLight = snakeAmbientColour;
+            RenderSettings.customReflection = snakeCubemap;
         }
         if (playerChoice.monsterSelection == playerScript.monsterType.CORNFELLA)
         {
             currentColour = cornFellaWorldColour;
             RenderSettings.skybox = cornSkybox;
             RenderSettings.ambientLight = cornAmbientColour;
+            RenderSettings.customReflection = cornCubemap;
         }
         foreach (var scrundler in sceneLighting)
         {
