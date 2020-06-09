@@ -39,6 +39,7 @@ public class playerScript : MonoBehaviour
     private float moveSpeedFactor; 
 
     [Header("Spook Mechanics")]
+    public Animator playerIconAnim;
     public bool stealthed;
     public Slider spookOMeter;
     public float spookResource, spookGainRate, spookDiminishRate;
@@ -243,6 +244,7 @@ public class playerScript : MonoBehaviour
         //stealth checks &  value changes
         if (stealthed == false)
         {
+            playerIconAnim.SetBool("amSeen", true);
             if (spookResource > 0)
             {
                 spookResource = spookResource - (spookDiminishRate * Time.deltaTime);
@@ -254,7 +256,8 @@ public class playerScript : MonoBehaviour
         }
         if(stealthed == true)
         {
-            if(spookResource < spookOMeter.maxValue)
+            playerIconAnim.SetBool("amSeen", false);
+            if (spookResource < spookOMeter.maxValue)
             {
                 spookResource = spookResource + (spookGainRate * Time.deltaTime);
             }
@@ -273,6 +276,9 @@ public class playerScript : MonoBehaviour
         debugCircleVisualizer1.transform.localScale =new Vector3(circleVizSize, circleVizSize, circleVizSize);
 
         spookOMeter.value = spookResource;
+
+        //player icon animation stuff
+        playerIconAnim.SetInteger("scaryLevel", Mathf.CeilToInt(spookResource));
     }
 
     private void FixedUpdate()

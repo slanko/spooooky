@@ -13,7 +13,7 @@ public class godScript : MonoBehaviour
     [SerializeField]
     private int sightLines = 0;
     private List<GameObject> registeredObservers = new List<GameObject>();
-    
+
 
 
     [Header("Game Control Stuff")]
@@ -22,6 +22,7 @@ public class godScript : MonoBehaviour
     bool invokedRestart = false;
 
     [Header("Score Stuff")]
+    public Animator tinyScoreAnim;
     public float scoreCountdownWaitTime;
     public float currentCountdownTime;
     public float softScore, loggedScore, scoreMultiplier;
@@ -36,7 +37,7 @@ public class godScript : MonoBehaviour
     public float musicVolume;
     public bool musicMuted;
 
-    [Header("Lighting Stuff")]
+    [Header("Colour Theme Stuff")]
     [SerializeField]
     private GameObject[] sceneLighting;
     [Header("World Lighting Colours")]
@@ -52,6 +53,10 @@ public class godScript : MonoBehaviour
     [Header("Environment Reflections")]
     public Cubemap wigglerCubemap;
     public Cubemap ballCubemap, snakeCubemap, cornCubemap;
+    [Header("Spook Bar Colour")]
+    public Image spookBar;
+    public Color wigglyBarColour;
+    public Color ballBarColour, snakeBarColour, cornBarColour;
     // Start is called before the first frame update
     void Start()
     {
@@ -93,10 +98,12 @@ public class godScript : MonoBehaviour
         if(softScore > 0)
         {
             softscoreCounter.text = "+" + softScore;
+            tinyScoreAnim.SetBool("scoreUp", true);
         }
         else
         {
             softscoreCounter.text = null;
+            tinyScoreAnim.SetBool("scoreUp", false);
         }
 
         //timer stuff
@@ -184,6 +191,7 @@ public class godScript : MonoBehaviour
             RenderSettings.skybox = wigglySkybox;
             RenderSettings.ambientLight = wigglyAmbientColour;
             RenderSettings.customReflection = wigglerCubemap;
+            spookBar.color = wigglyBarColour;
         }
         if(playerChoice.monsterSelection == playerScript.monsterType.BALLFELLA)
         {
@@ -191,6 +199,7 @@ public class godScript : MonoBehaviour
             RenderSettings.skybox = ballSkybox;
             RenderSettings.ambientLight = ballAmbientColour;
             RenderSettings.customReflection = ballCubemap;
+            spookBar.color = ballBarColour;
         }
         if (playerChoice.monsterSelection == playerScript.monsterType.SNAKEFELLA)
         {
@@ -198,6 +207,7 @@ public class godScript : MonoBehaviour
             RenderSettings.skybox = snakeSkybox;
             RenderSettings.ambientLight = snakeAmbientColour;
             RenderSettings.customReflection = snakeCubemap;
+            spookBar.color = snakeBarColour;
         }
         if (playerChoice.monsterSelection == playerScript.monsterType.CORNFELLA)
         {
@@ -205,6 +215,7 @@ public class godScript : MonoBehaviour
             RenderSettings.skybox = cornSkybox;
             RenderSettings.ambientLight = cornAmbientColour;
             RenderSettings.customReflection = cornCubemap;
+            spookBar.color = cornBarColour;
         }
         foreach (var scrundler in sceneLighting)
         {

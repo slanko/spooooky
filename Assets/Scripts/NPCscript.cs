@@ -9,7 +9,8 @@ public class NPCscript : MonoBehaviour
     NavMeshAgent nav;
     public float fearAmount, fearDiminishRate, moveTimeMin, moveTimeMax, moveRangeMin, moveRangeMax;
     public bool scared, resetMove, screamed, seenPlayer, subtractedFromSightCount;
-    public GameObject exit, buddyPlayer, myScareSphere;
+    public GameObject exit, exit2, buddyPlayer, myScareSphere;
+    GameObject preferredExit;
     playerScript pS;
     public ParticleSystem particlez;
     AudioSource aud;
@@ -37,13 +38,19 @@ public class NPCscript : MonoBehaviour
     private void Update()
     {
         Debug.DrawLine(transform.position, nav.destination, Color.green);
-
         if(scared == true)
         {
-            nav.SetDestination(exit.transform.position);
+            bool exitPicked = false;
+            if (exitPicked == false)
+            {
+                pickExit();
+                exitPicked = true;
+            }
+            nav.SetDestination(preferredExit.transform.position);
             nav.speed = 10;
             if(particlez.isPlaying == false)
             {
+                exitPicked = false;
                 particlez.Play();
             }
         }
@@ -197,6 +204,21 @@ public class NPCscript : MonoBehaviour
             navPos = new Vector3(navPos.x, 0, navPos.z);
             nav.SetDestination(navPos);
             Invoke("changePosition", Random.Range(moveTimeMin, moveTimeMax));
+        }
+    }
+
+    void pickExit()
+    {
+        float distToExit1, distToExit2;
+        distToExit1 = Vector3.Distance(transform.position, exit.transform.position);
+        distToExit2 = Vector3.Distance(transform.position, exit2.transform.position);
+        if (distToExit1 > distToExit2)
+        {
+            preferredExit = exit2;
+        }
+        else
+        {
+            preferredExit = exit;
         }
     }
 }
