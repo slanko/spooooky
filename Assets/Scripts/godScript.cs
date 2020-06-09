@@ -14,8 +14,6 @@ public class godScript : MonoBehaviour
     private int sightLines = 0;
     private List<GameObject> registeredObservers = new List<GameObject>();
 
-
-
     [Header("Game Control Stuff")]
     public GameObject winText;
     public Text counter;
@@ -64,6 +62,7 @@ public class godScript : MonoBehaviour
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, "Test Level");
         muzik.volume = musicVolume;
         setLightColour();
+        muzik.volume = PlayerPrefs.GetFloat("musicVolume");
     }
 
     // Update is called once per frame

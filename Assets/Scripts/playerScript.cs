@@ -80,6 +80,8 @@ public class playerScript : MonoBehaviour
         aud = GetComponent<AudioSource>();
         slimy = GetComponent<slimeTrailAbility>();
 
+        aud.volume = PlayerPrefs.GetFloat("audioVolume");
+
         if(playerChoice.monsterSelection == monsterType.WIGGLYFELLA)
         {
             moveSpeed = monster1MoveSpeed;

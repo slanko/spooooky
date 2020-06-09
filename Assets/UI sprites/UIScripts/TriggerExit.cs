@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class TriggerExit : MonoBehaviour
 {
-    public GameObject canva1;
-    public GameObject canva2;
-    public GameObject Canvas3;
+    public GameObject playerSelect;
+    public GameObject mainMenu;
+    public GameObject settingsScreen;
     public Animator anim;
     public Animator anim2;
     public Animator anim3;
@@ -22,22 +22,34 @@ public class TriggerExit : MonoBehaviour
     }
     public void SettingsPressed()
     {
-        anim2.SetTrigger("Settings");
+        anim.SetTrigger("Settings");
     }
-    public void menuTrigger1()
+
+    public void SettingsBackPressed()
     {
-        canva1.SetActive(true);
-        canva2.SetActive(false);
-    }public void menuTrigger2()
-    {
-        canva1.SetActive(false);
-        canva2.SetActive(true);
-        anim.SetTrigger("Entry");
+        anim3.SetTrigger("Back");
     }
-    public void menuTrigger3()
+
+    public void menuTrigger(string menuToTransitionTo)
     {
-        canva1.SetActive(false);
-        canva2.SetActive(true);
-        anim.SetTrigger("Entry");
+        if(menuToTransitionTo == "playerSelect")
+        {
+            playerSelect.SetActive(true);
+            mainMenu.SetActive(false);
+        }
+        if(menuToTransitionTo == "mainMenu")
+        {
+            playerSelect.SetActive(false);
+            mainMenu.SetActive(true);
+            settingsScreen.SetActive(false);
+            anim.SetTrigger("Entry");
+        }
+        if(menuToTransitionTo == "settingsScreen")
+        {
+            playerSelect.SetActive(false);
+            mainMenu.SetActive(false);
+            settingsScreen.SetActive(true);
+            anim.SetTrigger("Entry");
+        }
     }
 }

@@ -33,6 +33,7 @@ public class NPCscript : MonoBehaviour
         buddyPlayer = GameObject.Find("Player");
         myLine = GetComponent<LineRenderer>();
         god.NPCcount++;
+        aud.volume = PlayerPrefs.GetFloat("audioVolume");
     }
 
     private void Update()

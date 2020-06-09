@@ -115,8 +115,8 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.6
-    functionName: Canvas2
-    data: 
+    functionName: transitionOut
+    data: mainMenu
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
