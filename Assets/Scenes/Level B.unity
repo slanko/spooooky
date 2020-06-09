@@ -38,13 +38,13 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 8900000, guid: 3ae2ab2f14259a544b13bad1b57790f4, type: 3}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.33885053, g: 0.24141963, b: 0.9833995, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -43361,15 +43361,15 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 112
       objectReference: {fileID: 0}
-    - target: {fileID: 479318900, guid: e35de8ee5ff9a24428d45bd201e07f97, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3081418098980497961, guid: e35de8ee5ff9a24428d45bd201e07f97,
         type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 79dc7c1947cdc6f48b63f7c6414f0821, type: 2}
+    - target: {fileID: 479318900, guid: e35de8ee5ff9a24428d45bd201e07f97, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2085167928228781632, guid: e35de8ee5ff9a24428d45bd201e07f97,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
