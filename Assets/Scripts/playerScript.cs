@@ -15,22 +15,22 @@ public class playerScript : MonoBehaviour
     [Header("Wiggly Fella Values"), Tooltip("Values for the Wiggly Fella. Essentially default, all rounder character with a special movement option.")]
     public float monster1MoveSpeed;
     public float monster1ScareRadius, monster1BlockRadius, monster1SpookGain, monster1SpookDecay;
-    public GameObject monster1Model;
+    public GameObject monster1Model, monster1BabyModel;
 
     [Header("Ball Fella Values"), Tooltip("Values for the Funny Little Ball Fella. A fast little fella who isn't exactly scary but has SPEED abilities to back it up.")]
     public float monster2MoveSpeed;
     public float monster2ScareRadius, monster2BlockRadius, monster2SpookGain, monster2SpookDecay;
-    public GameObject monster2Model;
+    public GameObject monster2Model, monster2BabyModel;
 
     [Header("Snake Fella Values"), Tooltip("Values for the Snake Fella. ")]
     public float monster3MoveSpeed;
     public float monster3ScareRadius, monster3BlockRadius, monster3SpookGain, monster3SpookDecay;
-    public GameObject monster3Model;
+    public GameObject monster3Model, monster3BabyModel;
 
     [Header("Corn Fella Values"), Tooltip("Values for the Snake Fella. ")]
     public float monster4MoveSpeed;
     public float monster4ScareRadius, monster4BlockRadius, monster4SpookGain, monster4SpookDecay;
-    public GameObject monster4Model;
+    public GameObject monster4Model, monster4BabyModel;
 
     [Header("Global Inputs")]
     public KeyCode scareKey;
@@ -45,6 +45,7 @@ public class playerScript : MonoBehaviour
     public float spookResource, spookGainRate, spookDiminishRate;
     public SphereCollider scareRadius;
     public float scareRadiusMult;
+    public bool babyMode;
 
     [Header("Camera Stuff")]
     public float camLerpSpeed;
@@ -281,6 +282,64 @@ public class playerScript : MonoBehaviour
 
         //player icon animation stuff
         playerIconAnim.SetInteger("scaryLevel", Mathf.CeilToInt(spookResource));
+
+        //baby mode bullshit
+
+        if(spookResource < 1)
+        {
+            babyMode = true;
+        }
+        else
+        {
+            babyMode = false;
+        }
+
+        if(babyMode == true)
+        {
+            if(playerChoice.monsterSelection == playerScript.monsterType.WIGGLYFELLA)
+            {
+                monster1Model.SetActive(false);
+                monster1BabyModel.SetActive(true);
+            }
+            if (playerChoice.monsterSelection == playerScript.monsterType.BALLFELLA)
+            {
+                monster2Model.SetActive(false);
+                monster2BabyModel.SetActive(true);
+            }
+            if (playerChoice.monsterSelection == playerScript.monsterType.SNAKEFELLA)
+            {
+                monster3Model.SetActive(false);
+                monster3BabyModel.SetActive(true);
+            }
+            if (playerChoice.monsterSelection == playerScript.monsterType.CORNFELLA)
+            {
+                monster4Model.SetActive(false);
+                monster4BabyModel.SetActive(true);
+            }
+        }
+        else
+        {
+            if (playerChoice.monsterSelection == playerScript.monsterType.WIGGLYFELLA)
+            {
+                monster1Model.SetActive(true);
+                monster1BabyModel.SetActive(false);
+            }
+            if (playerChoice.monsterSelection == playerScript.monsterType.BALLFELLA)
+            {
+                monster2Model.SetActive(true);
+                monster2BabyModel.SetActive(false);
+            }
+            if (playerChoice.monsterSelection == playerScript.monsterType.SNAKEFELLA)
+            {
+                monster3Model.SetActive(true);
+                monster3BabyModel.SetActive(false);
+            }
+            if (playerChoice.monsterSelection == playerScript.monsterType.CORNFELLA)
+            {
+                monster4Model.SetActive(true);
+                monster4BabyModel.SetActive(false);
+            }
+        }
     }
 
     private void FixedUpdate()
