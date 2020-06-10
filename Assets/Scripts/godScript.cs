@@ -3,16 +3,45 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using GameAnalyticsSDK;
+using System;
 public class godScript : MonoBehaviour
 {
-    public float NPCcount;
+    [Header("NPC stuff")]
+    public float NPCcount, globalFearLevel;
+
+    [SerializeField]
+    private int sightLines = 0;
+    private List<GameObject> registeredObservers = new List<GameObject>();
+    
+
+
+    [Header("Game Control Stuff")]
     public GameObject winText;
     public Text counter;
     bool invokedRestart = false;
+
+    [Header("Score Stuff")]
+    public float scoreCountdownWaitTime;
+    public float currentCountdownTime;
+    public float softScore, loggedScore, scoreMultiplier;
+    public int sendScore;
+    public Text softscoreCounter, ScoreCounter, timerText;
+    public TimeSpan gameTime;
+    public float timeScoreMult, timeScoreMultDecay, timeScoreMultMin;
+
+    [Header("Audio Stuff")]
+    public KeyCode musicMuteButton;
+    public AudioSource muzik;
+    public float musicVolume;
+    public bool musicMuted;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        GameAnalytics.Initialize();
+        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, "Test Level");
+        muzik.volume = musicVolume;
     }
 
     // Update is called once per frame
@@ -24,11 +53,66 @@ public class godScript : MonoBehaviour
             if(invokedRestart == false)
             {
                 invokedRestart = true;
+                logScore();
+                GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "Test Level", sendScore);
                 Invoke("resetGame", 3);
+                muzik.volume = musicVolume;
+            }
+        }
+        if(currentCountdownTime > 0)
+        {
+            currentCountdownTime = currentCountdownTime - Time.deltaTime;
+        }
+        if(currentCountdownTime < 0)
+        {
+            currentCountdownTime = 0;
+            logScore();
+        }
+        ScoreCounter.text = "" + loggedScore;
+        if(softScore > 0)
+        {
+            softscoreCounter.text = "+" + softScore;
+        }
+        else
+        {
+            softscoreCounter.text = null;
+        }
+
+        //timer stuff
+        if (NPCcount > 0)
+        {
+            gameTime += TimeSpan.FromSeconds(Time.deltaTime);
+            timerText.text = gameTime.ToString(@"mm\:ss\.ff");
+            timeScoreMult = timeScoreMult - (Time.deltaTime * timeScoreMultDecay);
+            if (timeScoreMult < timeScoreMultMin)
+            {
+                timeScoreMult = timeScoreMultMin;
+            }
+        }
+
+        //goto menu stuff
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("MainMenuTest");
+        }
+
+        //music mute stuff
+        if (Input.GetKeyDown(musicMuteButton) || Input.GetButtonDown("ControllerBack"))
+        {
+            if(musicMuted == false)
+            {
+                muzik.volume = 0;
+                musicMuted = true;
+            }
+            else
+            {
+                muzik.volume = musicVolume;
+                musicMuted = false;
             }
         }
 
         counter.text = NPCcount.ToString();
+        sendScore = (int) loggedScore;
     }
 
     void resetGame()
@@ -37,4 +121,35 @@ public class godScript : MonoBehaviour
         SceneManager.LoadScene(scene.name);
     }
 
+
+    public void upScore(int scoreAmount, int multAmount)
+    {
+        scoreMultiplier = scoreMultiplier + multAmount;
+        softScore = Mathf.Ceil((softScore + (scoreAmount * scoreMultiplier)) * timeScoreMult);
+        currentCountdownTime = scoreCountdownWaitTime;
+    }
+
+    void logScore()
+    {
+        loggedScore = loggedScore + softScore;
+        softScore = 0;
+        scoreMultiplier = 0;
+    }
+
+    public void registerObserver(GameObject observer)
+    {
+        registeredObservers.Add(observer);
+        sightLines = registeredObservers.Count;
+    }
+
+    public void deregisterObserver(GameObject observer)
+    {
+        registeredObservers.Remove(observer);
+        sightLines = registeredObservers.Count;
+    }
+
+    public bool isSeen()
+    {
+        return sightLines > 0;
+    }
 }

@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class wallHideScript : MonoBehaviour
 {
-    camRayScript cameraRay;
     MeshRenderer myRenderer;
+    Animator anim;
 
     private void Start()
     {
         myRenderer = GetComponent<MeshRenderer>();
-        cameraRay = GameObject.Find("camBuddy/Main Camera").GetComponent<camRayScript>();
+        anim = GetComponent<Animator>();
     }
 
     private void OnCollisionStay(Collision other)
     {
         if(other.gameObject.tag == "wallDestroyer")
         {
-            myRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+            anim.SetBool("disappear", true);
         }
     }
 
@@ -25,7 +25,7 @@ public class wallHideScript : MonoBehaviour
     {
         if (other.gameObject.tag == "wallDestroyer")
         {
-            myRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            anim.SetBool("disappear", false);
         }
     }
 }
