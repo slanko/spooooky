@@ -44,13 +44,13 @@ ScriptedImporter:
         offset: {x: 0, y: 0}
       - name: _EmissionMap
         texture: {instanceID: 0}
-        scale: {x: 2, y: 2}
-        offset: {x: 0, y: 0}
+        scale: {x: 4, y: 4}
+        offset: {x: 0.5, y: 0}
       - name: _MainTex
         texture: {fileID: 5425025609945629430, guid: a4a051eaf7374764a82165b33154d9fa,
           type: 3}
-        scale: {x: 2, y: 2}
-        offset: {x: 0, y: 0}
+        scale: {x: 4, y: 4}
+        offset: {x: 0.5, y: 0}
       - name: _MetallicGlossMap
         texture: {fileID: 3518527076950908637, guid: a4a051eaf7374764a82165b33154d9fa,
           type: 3}
@@ -68,7 +68,7 @@ ScriptedImporter:
         offset: {x: 0, y: 0}
       floats:
       - name: _BumpScale
-        float: 1
+        float: 2
       - name: _Cutoff
         float: 0.5
       - name: _DetailNormalMapScale
@@ -101,7 +101,7 @@ ScriptedImporter:
         float: 1
       colors:
       - name: _Color
-        color: {r: 1, g: 1, b: 1, a: 1}
+        color: {r: 0.735849, g: 0.735849, b: 0.735849, a: 1}
       - name: _EmissionColor
         color: {r: 0, g: 0, b: 0, a: 1}
     outputDescList:

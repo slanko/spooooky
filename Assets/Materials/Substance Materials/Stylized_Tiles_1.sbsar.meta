@@ -16,8 +16,7 @@ ScriptedImporter:
     graphDescIndex: 0
     generateAllOutputs: 0
     generateMipMaps: 1
-    preset: " <sbspreset pkgurl=\"pkg://Stylized_Marble_Tiles\" label=\"\" >\n  <presetinput
-      identifier=\"$outputsize\" uid=\"264159015\" type=\"8\" value=\"9,9\" />\n </sbspreset>\n"
+    preset: " <sbspreset pkgurl=\"pkg://Stylized_Marble_Tiles\" label=\"\" >\n </sbspreset>\n"
     shaderName: Standard
     materialProperties:
       shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
@@ -100,7 +99,7 @@ ScriptedImporter:
         float: 1
       colors:
       - name: _Color
-        color: {r: 0.45937166, g: 0.8773585, b: 0.7646388, a: 1}
+        color: {r: 0.6981132, g: 0.6981132, b: 0.6981132, a: 1}
       - name: _EmissionColor
         color: {r: 0, g: 0, b: 0, a: 1}
     outputDescList:
