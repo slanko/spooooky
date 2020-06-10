@@ -18,6 +18,8 @@ public class godScript : MonoBehaviour
     public GameObject winText;
     public Text counter;
     bool invokedRestart = false;
+    bool paused = false;
+    public Animator pauseMenuAnim;
 
     [Header("Score Stuff")]
     public Animator tinyScoreAnim;
@@ -117,11 +119,32 @@ public class godScript : MonoBehaviour
             }
         }
 
-        //goto menu stuff
+        //pause menu stuff
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneManager.LoadScene("MainMenuTest");
+
+            if (!paused)
+            {
+                paused = true;
+            }
+            else
+            {
+                paused = false;
+            }
         }
+
+        if(paused == true)
+        {
+            pauseMenuAnim.SetBool("paused", true);
+            Time.timeScale = 0;
+        }
+        else
+        {
+            pauseMenuAnim.SetBool("paused", false);
+            Time.timeScale = 1;
+        }
+
+
 
         //music mute stuff
         if (Input.GetKeyDown(musicMuteButton) || Input.GetButtonDown("ControllerBack"))

@@ -2375,7 +2375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8396226, g: 0.13069598, b: 0.6164537, a: 1}
+  m_Color: {r: 0.5647059, g: 0.16862746, b: 0.38431373, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -11868,16 +11868,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Human_C_Idle
       objectReference: {fileID: 0}
-    - target: {fileID: -6057140222963153312, guid: a13cbb00b201e4e45a3069eb1c931c1f,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 51c9a22578cf2d24cb8bb6251e25f8e9, type: 2}
-    - target: {fileID: -4427541548931147265, guid: a13cbb00b201e4e45a3069eb1c931c1f,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: fe5878a031f66154f82386ee35c5cd07, type: 2}
     - target: {fileID: -4216859302048453862, guid: a13cbb00b201e4e45a3069eb1c931c1f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11948,6 +11938,16 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 60
       objectReference: {fileID: 0}
+    - target: {fileID: -6057140222963153312, guid: a13cbb00b201e4e45a3069eb1c931c1f,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 51c9a22578cf2d24cb8bb6251e25f8e9, type: 2}
+    - target: {fileID: -4427541548931147265, guid: a13cbb00b201e4e45a3069eb1c931c1f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: fe5878a031f66154f82386ee35c5cd07, type: 2}
     - target: {fileID: 1800152125569740651, guid: a13cbb00b201e4e45a3069eb1c931c1f,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
