@@ -88,7 +88,7 @@ ScriptedImporter:
       - name: _OcclusionStrength
         float: 1
       - name: _Parallax
-        float: 0.05
+        float: 0.08
       - name: _SmoothnessTextureChannel
         float: 0
       - name: _SpecularHighlights
