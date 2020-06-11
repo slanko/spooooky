@@ -79,6 +79,9 @@ public class NPCscript : MonoBehaviour
             }
         }
 
+        //update audio volume
+        aud.volume = god.globalAudioVolume;
+
         if (Physics.Raycast(transform.position, buddyPlayer.transform.position - transform.position, out var rayHit, Vector3.Distance(transform.position, buddyPlayer.transform.position), validLayers))
         {
             if(scared == false)

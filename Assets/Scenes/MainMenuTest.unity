@@ -11868,6 +11868,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Human_C_Idle
       objectReference: {fileID: 0}
+    - target: {fileID: -6057140222963153312, guid: a13cbb00b201e4e45a3069eb1c931c1f,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 51c9a22578cf2d24cb8bb6251e25f8e9, type: 2}
+    - target: {fileID: -4427541548931147265, guid: a13cbb00b201e4e45a3069eb1c931c1f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: fe5878a031f66154f82386ee35c5cd07, type: 2}
     - target: {fileID: -4216859302048453862, guid: a13cbb00b201e4e45a3069eb1c931c1f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11938,16 +11948,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 60
       objectReference: {fileID: 0}
-    - target: {fileID: -6057140222963153312, guid: a13cbb00b201e4e45a3069eb1c931c1f,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 51c9a22578cf2d24cb8bb6251e25f8e9, type: 2}
-    - target: {fileID: -4427541548931147265, guid: a13cbb00b201e4e45a3069eb1c931c1f,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: fe5878a031f66154f82386ee35c5cd07, type: 2}
     - target: {fileID: 1800152125569740651, guid: a13cbb00b201e4e45a3069eb1c931c1f,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -13824,11 +13824,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8721634425300435974}
     m_Modifications:
-    - target: {fileID: 2214375683562476000, guid: b95c7ffe9ddfa464cb571781960af5fa,
-        type: 3}
-      propertyPath: m_Name
-      value: Frame
-      objectReference: {fileID: 0}
     - target: {fileID: 2945445602019238899, guid: b95c7ffe9ddfa464cb571781960af5fa,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -13898,6 +13893,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.9674916
+      objectReference: {fileID: 0}
+    - target: {fileID: 2214375683562476000, guid: b95c7ffe9ddfa464cb571781960af5fa,
+        type: 3}
+      propertyPath: m_Name
+      value: Frame
       objectReference: {fileID: 0}
     - target: {fileID: 5990785760769941129, guid: b95c7ffe9ddfa464cb571781960af5fa,
         type: 3}

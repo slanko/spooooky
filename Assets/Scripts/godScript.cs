@@ -18,7 +18,7 @@ public class godScript : MonoBehaviour
     public GameObject winText;
     public Text counter;
     bool invokedRestart = false;
-    bool paused = false;
+    public bool paused = false;
     public Animator pauseMenuAnim;
 
     [Header("Score Stuff")]
@@ -34,8 +34,8 @@ public class godScript : MonoBehaviour
     [Header("Audio Stuff")]
     public KeyCode musicMuteButton;
     public AudioSource muzik;
-    public float musicVolume;
     public bool musicMuted;
+    public float globalAudioVolume;
 
     [Header("Colour Theme Stuff")]
     [SerializeField]
@@ -62,9 +62,9 @@ public class godScript : MonoBehaviour
     {
         GameAnalytics.Initialize();
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, "Test Level");
-        muzik.volume = musicVolume;
         setLightColour();
         muzik.volume = PlayerPrefs.GetFloat("musicVolume");
+        globalAudioVolume = PlayerPrefs.GetFloat("audioVolume");
     }
 
     // Update is called once per frame
@@ -79,7 +79,6 @@ public class godScript : MonoBehaviour
                 logScore();
                 GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "Test Level", sendScore);
                 Invoke("resetGame", 3);
-                muzik.volume = musicVolume;
             }
         }
         if (Input.GetKeyDown(KeyCode.P))
@@ -142,23 +141,6 @@ public class godScript : MonoBehaviour
         {
             pauseMenuAnim.SetBool("paused", false);
             Time.timeScale = 1;
-        }
-
-
-
-        //music mute stuff
-        if (Input.GetKeyDown(musicMuteButton) || Input.GetButtonDown("ControllerBack"))
-        {
-            if(musicMuted == false)
-            {
-                muzik.volume = 0;
-                musicMuted = true;
-            }
-            else
-            {
-                muzik.volume = musicVolume;
-                musicMuted = false;
-            }
         }
 
         counter.text = NPCcount.ToString();
@@ -244,5 +226,15 @@ public class godScript : MonoBehaviour
             var lightBuddy = scrundler.GetComponent<Light>();
             lightBuddy.color = currentColour;
         }
+    }
+
+    public void changeMusicVolumeAtRuntime()
+    {
+        muzik.volume = PlayerPrefs.GetFloat("musicVolume");
+    }
+
+    public void changeAudioVolumeAtRuntime()
+    {
+        globalAudioVolume = PlayerPrefs.GetFloat("audioVolume");
     }
 }

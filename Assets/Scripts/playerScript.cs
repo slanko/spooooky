@@ -158,6 +158,9 @@ public class playerScript : MonoBehaviour
         transform.LookAt(transform.position + realMove);
         //end big fat movement code block
 
+        //update audio volume
+        aud.volume = god.globalAudioVolume;
+
         //dumb first person mode start
         if(firstPersonMode == true)
         {

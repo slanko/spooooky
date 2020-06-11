@@ -33,4 +33,21 @@ public class settingsScript : MonoBehaviour
         Debug.Log(PlayerPrefs.GetFloat("audioVolume"));
         PlayerPrefs.Save();
     }
+
+    public void audioChangeAtRuntime()
+    {
+        PlayerPrefs.SetFloat("musicVolume", musicSlider.value);
+        PlayerPrefs.Save();
+        GameObject.Find("GOD").GetComponent<godScript>().muzik.volume = PlayerPrefs.GetFloat("musicVolume");
+    }
+
+    public void sfxChangeAtRuntime()
+    {
+        PlayerPrefs.SetFloat("audioVolume", sfxSlider.value);
+        Debug.Log(PlayerPrefs.GetFloat("audioVolume"));
+        PlayerPrefs.Save();
+        GameObject.Find("GOD").GetComponent<godScript>().globalAudioVolume = PlayerPrefs.GetFloat("audioVolume");
+    }
+
+
 }
