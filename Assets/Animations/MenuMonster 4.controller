@@ -30,7 +30,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Monster D Idle
-  m_Speed: 16
+  m_Speed: 6
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1144897074427257747}
@@ -43,7 +43,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 1827226128182048838, guid: b390e23c9177e7f4d85d55c4456c839d,
+  m_Motion: {fileID: 1827226128182048838, guid: 4fcf70ebe1b032a4a895f4f25f6d3057,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -56,7 +56,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MenuMonster 3
+  m_Name: MenuMonster 4
   serializedVersion: 5
   m_AnimatorParameters: []
   m_AnimatorLayers:
