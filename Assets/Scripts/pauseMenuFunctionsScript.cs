@@ -33,4 +33,26 @@ public class pauseMenuFunctionsScript : MonoBehaviour
     {
         SceneManager.LoadScene("mainMenuTest");
     }
+
+    public void swapControlsOn()
+    {
+        pauseMenuAnim.SetBool("controlsSwap", true);
+    }
+
+    public void swapControlsOff()
+    {
+        pauseMenuAnim.SetBool("controlsSwap", false);
+    }
+
+    public void openControls()
+    {
+        pauseMenuAnim.SetBool("controlsUp", true);
+        pauseMenuAnim.SetBool("controlsSwap", false);
+    }
+
+    public void closeControls()
+    {
+        pauseMenuAnim.SetBool("controlsUp", false);
+        pauseMenuAnim.SetBool("controlsSwap", false);
+    }
 }

@@ -16,21 +16,25 @@ public class playerScript : MonoBehaviour
     public float monster1MoveSpeed;
     public float monster1ScareRadius, monster1BlockRadius, monster1SpookGain, monster1SpookDecay;
     public GameObject monster1Model, monster1BabyModel;
+    public Sprite monster1Image1, monster1Image2, monster1Image3;
 
     [Header("Ball Fella Values"), Tooltip("Values for the Funny Little Ball Fella. A fast little fella who isn't exactly scary but has SPEED abilities to back it up.")]
     public float monster2MoveSpeed;
     public float monster2ScareRadius, monster2BlockRadius, monster2SpookGain, monster2SpookDecay;
     public GameObject monster2Model, monster2BabyModel;
+    public Sprite monster2Image1, monster2Image2, monster2Image3;
 
-    [Header("Snake Fella Values"), Tooltip("Values for the Snake Fella. ")]
+    [Header("Snake Fella Values"), Tooltip("Values for the Snake Fella. haha i stopped writing descriptions")]
     public float monster3MoveSpeed;
     public float monster3ScareRadius, monster3BlockRadius, monster3SpookGain, monster3SpookDecay;
     public GameObject monster3Model, monster3BabyModel;
+    public Sprite monster3Image1, monster3Image2, monster3Image3;
 
     [Header("Corn Fella Values"), Tooltip("Values for the Snake Fella. ")]
     public float monster4MoveSpeed;
     public float monster4ScareRadius, monster4BlockRadius, monster4SpookGain, monster4SpookDecay;
     public GameObject monster4Model, monster4BabyModel;
+    public Sprite monster4Image1, monster4Image2, monster4Image3;
 
     [Header("Global Inputs")]
     public KeyCode scareKey;
@@ -42,10 +46,13 @@ public class playerScript : MonoBehaviour
     public Animator playerIconAnim;
     public bool stealthed;
     public Slider spookOMeter;
-    public float spookResource, spookGainRate, spookDiminishRate;
+    public float spookResource, spookGainRate, spookDiminishRate, spookDiminishRateSlow, spookDiminishRateFast;
     public SphereCollider scareRadius;
     public float scareRadiusMult;
     public bool babyMode;
+    public Sprite spookLevelImage1, spookLevelImage2, spookLevelImage3;
+    public Image monsterPortrait;
+
 
     [Header("Camera Stuff")]
     public float camLerpSpeed;
@@ -74,7 +81,7 @@ public class playerScript : MonoBehaviour
         CORNFELLA
     }
     // Start is called before the first frame update
-    void Start()
+    void Start() 
     {
         god = GameObject.Find("GOD").GetComponent<godScript>();
         anim = GetComponent<Animator>();
@@ -95,6 +102,9 @@ public class playerScript : MonoBehaviour
             monster3Model.SetActive(false);
             monster4Model.SetActive(false);
             anim2 = monster1Model.GetComponent<Animator>();
+            spookLevelImage1 = monster1Image1;
+            spookLevelImage2 = monster1Image2;
+            spookLevelImage3 = monster1Image3;
         }
         if (playerChoice.monsterSelection == monsterType.BALLFELLA)
         {
@@ -108,6 +118,9 @@ public class playerScript : MonoBehaviour
             monster3Model.SetActive(false);
             monster4Model.SetActive(false);
             anim2 = monster2Model.GetComponent<Animator>();
+            spookLevelImage1 = monster2Image1;
+            spookLevelImage2 = monster2Image2;
+            spookLevelImage3 = monster2Image3;
         }
         if (playerChoice.monsterSelection == monsterType.SNAKEFELLA)
         {
@@ -121,6 +134,9 @@ public class playerScript : MonoBehaviour
             monster3Model.SetActive(true);
             monster4Model.SetActive(false);
             anim2 = monster3Model.GetComponent<Animator>();
+            spookLevelImage1 = monster3Image1;
+            spookLevelImage2 = monster3Image2;
+            spookLevelImage3 = monster3Image3;
         }
         if (playerChoice.monsterSelection == monsterType.CORNFELLA)
         {
@@ -134,10 +150,16 @@ public class playerScript : MonoBehaviour
             monster3Model.SetActive(false);
             monster4Model.SetActive(true);
             anim2 = monster4Model.GetComponent<Animator>();
+            spookLevelImage1 = monster4Image1;
+            spookLevelImage2 = monster4Image2;
+            spookLevelImage3 = monster4Image3;
         }
 
         moveSpeedFactor = 1;
         anim2.speed = 3;
+
+        spookDiminishRateFast = spookDiminishRate * 2.5f;
+        spookDiminishRateSlow = spookDiminishRate;
     }
 
     // Update is called once per frame
@@ -291,11 +313,20 @@ public class playerScript : MonoBehaviour
         if(spookResource < 1)
         {
             babyMode = true;
+            monsterPortrait.sprite = spookLevelImage1;
         }
         else
         {
             babyMode = false;
-        }
+            if(spookResource > 1 && spookResource < 2)
+            {
+                monsterPortrait.sprite = spookLevelImage2;
+            }
+            if(spookResource > 2)
+            {
+                monsterPortrait.sprite = spookLevelImage3;
+            }
+        } 
 
         if(babyMode == true)
         {
@@ -379,6 +410,11 @@ public class playerScript : MonoBehaviour
                 }
             }
         }
+
+        if(other.tag == "scareDecreaseZone")
+        {
+            spookDiminishRate = spookDiminishRateFast;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -386,6 +422,10 @@ public class playerScript : MonoBehaviour
         if(other.tag == "stealthzone")
         {
             stealthed = false;
+        }
+        if (other.tag == "scareDecreaseZone")
+        {
+            spookDiminishRate = spookDiminishRateSlow;
         }
     }
 }

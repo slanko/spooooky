@@ -140,6 +140,7 @@ public class godScript : MonoBehaviour
         else
         {
             pauseMenuAnim.SetBool("paused", false);
+            pauseMenuAnim.SetBool("controlsUp", false);
             Time.timeScale = 1;
         }
 
