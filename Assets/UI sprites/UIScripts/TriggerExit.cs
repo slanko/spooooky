@@ -11,6 +11,11 @@ public class TriggerExit : MonoBehaviour
     public Animator anim2;
     public Animator anim3;
 
+    private void Start()
+    {
+        Time.timeScale = 1;
+    }
+
     public void PlayPressed()
     {
         anim.SetTrigger("Play");

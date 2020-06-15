@@ -80,12 +80,14 @@ public class NPCscript : MonoBehaviour
         }
 
         //update audio volume
-        aud.volume = god.globalAudioVolume;
+        if(god != null)
+        {
+            aud.volume = god.globalAudioVolume;
+        }
+
 
         if (Physics.Raycast(transform.position, buddyPlayer.transform.position - transform.position, out var rayHit, Vector3.Distance(transform.position, buddyPlayer.transform.position), validLayers))
         {
-            if(scared == false)
-            {
                 if (rayHit.collider.gameObject.tag != "Player")
                 {
                     Debug.DrawRay(transform.position, (buddyPlayer.transform.position - transform.position), Color.red);
@@ -110,13 +112,6 @@ public class NPCscript : MonoBehaviour
                         myLine.SetPosition(i, Vector3.Lerp(transform.position, pS.gameObject.transform.position, i / 10f)); ;
                     }
                 }
-            }
-            else
-            {
-                Debug.DrawRay(transform.position, (buddyPlayer.transform.position - transform.position), Color.blue);
-                myLine.enabled = false;
-                god.deregisterObserver(this.gameObject);
-            }
 
         }
     }
