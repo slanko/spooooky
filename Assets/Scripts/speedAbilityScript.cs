@@ -9,6 +9,8 @@ public class speedAbilityScript : MonoBehaviour
     public float speedyBoost, speedyTimeMax;
     private float speedyTime;
     public TrailRenderer speedTrail;
+    public float oldSpookRate, newSpookRate;
+    bool setSpooks;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,14 +20,23 @@ public class speedAbilityScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+
+        if(setSpooks == false)
+        {
+            oldSpookRate = pS.spookDiminishRate;
+            newSpookRate = pS.spookDiminishRate * 2;
+            setSpooks = true;
+        }
         if (speedyTime > 0) 
         {
             speedyTime = Mathf.Max(0, speedyTime - Time.deltaTime);
             speedTrail.emitting = true;
+            pS.spookDiminishRate = newSpookRate;
             if(speedyTime == 0)
             {
                 pS.setSpeedFactor(1);
                 speedTrail.emitting = false;
+                pS.spookDiminishRate = oldSpookRate;
             }
         }
         

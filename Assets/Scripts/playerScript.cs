@@ -219,7 +219,7 @@ public class playerScript : MonoBehaviour
         //debug slime trail enable/disable
         if(playerChoice.monsterSelection == monsterType.SNAKEFELLA)
         {
-            if (Input.GetKeyDown(toggleSlime))
+            if (Input.GetKeyDown(useKey))
             {
                 if (slimy.weOutHereSliming == false)
                 {
