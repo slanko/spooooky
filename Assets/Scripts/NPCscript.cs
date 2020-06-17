@@ -16,6 +16,14 @@ public class NPCscript : MonoBehaviour
     AudioSource aud;
     LineRenderer myLine;
     public LayerMask validLayers;
+    Animator anim;
+    Rigidbody rb;
+    Vector3 oldPosition, newPosition;
+    public float funnyVelocity;
+
+    public GameObject model1, model2, modelFlashlight;
+    public bool flashLightNpc;
+    public Animator anim1, anim2, anim3;
 
 
     [Header("Score Stuff")]
@@ -34,10 +42,40 @@ public class NPCscript : MonoBehaviour
         myLine = GetComponent<LineRenderer>();
         god.NPCcount++;
         aud.volume = PlayerPrefs.GetFloat("audioVolume");
+        if(flashLightNpc == false)
+        {
+            int randomNum = Random.Range(1, 3);
+            if(randomNum == 1)
+            {
+                model1.SetActive(true);
+                anim = anim1;
+            }
+            if(randomNum == 2)
+            {
+                model1.SetActive(false);
+                model2.SetActive(true);
+                anim = anim2;
+            }
+        }
+        else
+        {
+           modelFlashlight.SetActive(true);
+            model1.SetActive(false);
+            anim = anim3;
+        }
+        oldPosition = transform.position;
     }
 
     private void Update()
     {
+
+        figureOutVelocity();
+        if(funnyVelocity < 0)
+        {
+            funnyVelocity = funnyVelocity * -1;
+        }
+        anim.SetFloat("runSpeed", funnyVelocity);
+        Debug.Log(funnyVelocity);
         Debug.DrawLine(transform.position, nav.destination, Color.green);
         if(scared == true)
         {
@@ -219,5 +257,12 @@ public class NPCscript : MonoBehaviour
         {
             preferredExit = exit;
         }
+    }
+
+    void figureOutVelocity()
+    {
+        newPosition = transform.position;
+        funnyVelocity = (newPosition.z - oldPosition.z) / Time.deltaTime;
+        oldPosition = transform.position;
     }
 }
