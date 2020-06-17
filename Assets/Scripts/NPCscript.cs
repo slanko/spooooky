@@ -85,13 +85,12 @@ public class NPCscript : MonoBehaviour
             aud.volume = god.globalAudioVolume;
         }
 
-
-        if (Physics.Raycast(transform.position, buddyPlayer.transform.position - transform.position, out var rayHit, Vector3.Distance(transform.position, buddyPlayer.transform.position), validLayers))
-        {
-                if (rayHit.collider.gameObject.tag != "Player")
+            if (Physics.Raycast(transform.position, buddyPlayer.transform.position - transform.position, out var rayHit, Vector3.Distance(transform.position, buddyPlayer.transform.position), validLayers))
+            {
+                if (rayHit.collider.gameObject.tag != "Player" || pS.cornMode == true)
                 {
                     Debug.DrawRay(transform.position, (buddyPlayer.transform.position - transform.position), Color.red);
-                    if(seenPlayer == true)
+                    if (seenPlayer == true)
                     {
                         seenPlayer = false;
                         god.deregisterObserver(this.gameObject);
@@ -101,19 +100,20 @@ public class NPCscript : MonoBehaviour
                 else
                 {
                     Debug.DrawRay(transform.position, (buddyPlayer.transform.position - transform.position), Color.yellow);
-                    if(seenPlayer == false)
+                    if (seenPlayer == false)
                     {
                         god.registerObserver(this.gameObject);
                         seenPlayer = true;
                     }
                     myLine.enabled = true;
-                    for(int i = 0; i < 10; i++)
+                    for (int i = 0; i < 10; i++)
                     {
                         myLine.SetPosition(i, Vector3.Lerp(transform.position, pS.gameObject.transform.position, i / 10f)); ;
                     }
                 }
 
-        }
+            }
+
     }
 
     private void OnTriggerEnter(Collider other)

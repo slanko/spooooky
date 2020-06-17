@@ -30,11 +30,12 @@ public class playerScript : MonoBehaviour
     public GameObject monster3Model, monster3BabyModel;
     public Sprite monster3Image1, monster3Image2, monster3Image3;
 
-    [Header("Corn Fella Values"), Tooltip("Values for the Snake Fella. ")]
+    [Header("Corn Fella Values"), Tooltip("Values for the Corn Fella. ")]
     public float monster4MoveSpeed;
     public float monster4ScareRadius, monster4BlockRadius, monster4SpookGain, monster4SpookDecay;
-    public GameObject monster4Model, monster4BabyModel;
+    public GameObject monster4Model, monster4BabyModel, monster4CornModeModel;
     public Sprite monster4Image1, monster4Image2, monster4Image3;
+    public float oldSpookGain, cornModeSpookGain;
 
     [Header("Global Inputs")]
     public KeyCode scareKey;
@@ -52,6 +53,7 @@ public class playerScript : MonoBehaviour
     public bool babyMode;
     public Sprite spookLevelImage1, spookLevelImage2, spookLevelImage3;
     public Image monsterPortrait;
+    public bool cornMode;
 
 
     [Header("Camera Stuff")]
@@ -153,6 +155,7 @@ public class playerScript : MonoBehaviour
             spookLevelImage1 = monster4Image1;
             spookLevelImage2 = monster4Image2;
             spookLevelImage3 = monster4Image3;
+            oldSpookGain = monster4SpookGain;
         }
 
         moveSpeedFactor = 1;
@@ -172,7 +175,7 @@ public class playerScript : MonoBehaviour
         var rotation = new Quaternion(0,0,0,0);
         if (firstPersonMode == false)
         {
-            rotation = Quaternion.LookRotation(cameraBuddy.transform.forward, Vector3.up);
+                rotation = Quaternion.LookRotation(cameraBuddy.transform.forward, Vector3.up);
         }
 
         var realMove = rotation * movement;
@@ -228,6 +231,23 @@ public class playerScript : MonoBehaviour
                 else
                 {
                     slimy.weOutHereSliming = false;
+                }
+            }
+        }
+
+        if (playerChoice.monsterSelection == monsterType.CORNFELLA)
+        {
+            if (Input.GetKeyDown(useKey))
+            {
+                if (cornMode == false)
+                {
+                    cornMode = true;
+                    spookGainRate = cornModeSpookGain;
+                }
+                else
+                {
+                    cornMode = false;
+                    spookGainRate = oldSpookGain;
                 }
             }
         }
@@ -327,60 +347,74 @@ public class playerScript : MonoBehaviour
                 monsterPortrait.sprite = spookLevelImage3;
             }
         } 
+        if(cornMode == false)
+        {
+            if (babyMode == true)
+            {
+                if (playerChoice.monsterSelection == playerScript.monsterType.WIGGLYFELLA)
+                {
+                    monster1Model.SetActive(false);
+                    monster1BabyModel.SetActive(true);
+                }
+                if (playerChoice.monsterSelection == playerScript.monsterType.BALLFELLA)
+                {
+                    monster2Model.SetActive(false);
+                    monster2BabyModel.SetActive(true);
+                }
+                if (playerChoice.monsterSelection == playerScript.monsterType.SNAKEFELLA)
+                {
+                    monster3Model.SetActive(false);
+                    monster3BabyModel.SetActive(true);
+                }
+                if (playerChoice.monsterSelection == playerScript.monsterType.CORNFELLA)
+                {
+                    monster4Model.SetActive(false);
+                    monster4BabyModel.SetActive(true);
+                    monster4CornModeModel.SetActive(false);
+                }
+            }
+            else
+            {
+                if (playerChoice.monsterSelection == playerScript.monsterType.WIGGLYFELLA)
+                {
+                    monster1Model.SetActive(true);
+                    monster1BabyModel.SetActive(false);
+                }
+                if (playerChoice.monsterSelection == playerScript.monsterType.BALLFELLA)
+                {
+                    monster2Model.SetActive(true);
+                    monster2BabyModel.SetActive(false);
+                }
+                if (playerChoice.monsterSelection == playerScript.monsterType.SNAKEFELLA)
+                {
+                    monster3Model.SetActive(true);
+                    monster3BabyModel.SetActive(false);
+                }
+                if (playerChoice.monsterSelection == playerScript.monsterType.CORNFELLA)
+                {
+                    monster4Model.SetActive(true);
+                    monster4BabyModel.SetActive(false);
+                    monster4CornModeModel.SetActive(false);
+                }
+            }
+        }
+        if(cornMode == true)
+        {
+            monster4Model.SetActive(false);
+            monster4BabyModel.SetActive(false);
+            monster4CornModeModel.SetActive(true);
+        }
 
-        if(babyMode == true)
-        {
-            if(playerChoice.monsterSelection == playerScript.monsterType.WIGGLYFELLA)
-            {
-                monster1Model.SetActive(false);
-                monster1BabyModel.SetActive(true);
-            }
-            if (playerChoice.monsterSelection == playerScript.monsterType.BALLFELLA)
-            {
-                monster2Model.SetActive(false);
-                monster2BabyModel.SetActive(true);
-            }
-            if (playerChoice.monsterSelection == playerScript.monsterType.SNAKEFELLA)
-            {
-                monster3Model.SetActive(false);
-                monster3BabyModel.SetActive(true);
-            }
-            if (playerChoice.monsterSelection == playerScript.monsterType.CORNFELLA)
-            {
-                monster4Model.SetActive(false);
-                monster4BabyModel.SetActive(true);
-            }
-        }
-        else
-        {
-            if (playerChoice.monsterSelection == playerScript.monsterType.WIGGLYFELLA)
-            {
-                monster1Model.SetActive(true);
-                monster1BabyModel.SetActive(false);
-            }
-            if (playerChoice.monsterSelection == playerScript.monsterType.BALLFELLA)
-            {
-                monster2Model.SetActive(true);
-                monster2BabyModel.SetActive(false);
-            }
-            if (playerChoice.monsterSelection == playerScript.monsterType.SNAKEFELLA)
-            {
-                monster3Model.SetActive(true);
-                monster3BabyModel.SetActive(false);
-            }
-            if (playerChoice.monsterSelection == playerScript.monsterType.CORNFELLA)
-            {
-                monster4Model.SetActive(true);
-                monster4BabyModel.SetActive(false);
-            }
-        }
     }
 
     private void FixedUpdate()
     {
         if (IsMoving)
         {
-            transform.Translate(Vector3.forward * (moveSpeed * moveSpeedFactor) * Time.deltaTime);
+            if(cornMode == false)
+            {
+                transform.Translate(Vector3.forward * (moveSpeed * moveSpeedFactor) * Time.deltaTime);
+            }
         }
         cameraBuddy.transform.position = Vector3.Lerp(cameraBuddy.transform.position, transform.position, camLerpSpeed);
         cameraBuddy.transform.rotation = Quaternion.Slerp(cameraBuddy.transform.rotation, cameraBuddyBuddy.transform.rotation, camLerpSpeed);

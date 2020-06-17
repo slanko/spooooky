@@ -56,5 +56,12 @@ public class TriggerExit : MonoBehaviour
             settingsScreen.SetActive(true);
             anim.SetTrigger("Entry");
         }
+
+
+
+    }
+    public void GetOuttaHere()
+    {
+        Application.Quit();
     }
 }
