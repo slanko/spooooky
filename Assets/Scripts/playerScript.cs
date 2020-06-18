@@ -15,27 +15,31 @@ public class playerScript : MonoBehaviour
     [Header("Wiggly Fella Values"), Tooltip("Values for the Wiggly Fella. Essentially default, all rounder character with a special movement option.")]
     public float monster1MoveSpeed;
     public float monster1ScareRadius, monster1BlockRadius, monster1SpookGain, monster1SpookDecay;
-    public GameObject monster1Model, monster1BabyModel;
+    public GameObject monster1Model, monster1BabyModel, monster1FinalForm;
     public Sprite monster1Image1, monster1Image2, monster1Image3;
+    public ParticleSystem monster1Particles;
 
     [Header("Ball Fella Values"), Tooltip("Values for the Funny Little Ball Fella. A fast little fella who isn't exactly scary but has SPEED abilities to back it up.")]
     public float monster2MoveSpeed;
     public float monster2ScareRadius, monster2BlockRadius, monster2SpookGain, monster2SpookDecay;
-    public GameObject monster2Model, monster2BabyModel;
+    public GameObject monster2Model, monster2BabyModel, monster2FinalForm;
     public Sprite monster2Image1, monster2Image2, monster2Image3;
+    public ParticleSystem monster2Particles;
 
     [Header("Snake Fella Values"), Tooltip("Values for the Snake Fella. haha i stopped writing descriptions")]
     public float monster3MoveSpeed;
     public float monster3ScareRadius, monster3BlockRadius, monster3SpookGain, monster3SpookDecay;
-    public GameObject monster3Model, monster3BabyModel;
+    public GameObject monster3Model, monster3BabyModel, monster3FinalForm;
     public Sprite monster3Image1, monster3Image2, monster3Image3;
+    public ParticleSystem monster3Particles;
 
     [Header("Corn Fella Values"), Tooltip("Values for the Corn Fella. ")]
     public float monster4MoveSpeed;
     public float monster4ScareRadius, monster4BlockRadius, monster4SpookGain, monster4SpookDecay;
-    public GameObject monster4Model, monster4BabyModel, monster4CornModeModel;
+    public GameObject monster4Model, monster4BabyModel, monster4FinalForm, monster4CornModeModel;
     public Sprite monster4Image1, monster4Image2, monster4Image3;
     public float oldSpookGain, cornModeSpookGain;
+    public ParticleSystem monster4Particles;
 
     [Header("Global Inputs")]
     public KeyCode scareKey;
@@ -54,6 +58,8 @@ public class playerScript : MonoBehaviour
     public Sprite spookLevelImage1, spookLevelImage2, spookLevelImage3;
     public Image monsterPortrait;
     public bool cornMode;
+    public ParticleSystem darkParticles;
+
 
 
     [Header("Camera Stuff")]
@@ -186,6 +192,55 @@ public class playerScript : MonoBehaviour
         //update audio volume
         aud.volume = god.globalAudioVolume;
 
+        //animator checks!!
+        if (anim2.isActiveAndEnabled == false)
+        {
+            if (playerChoice.monsterSelection == playerScript.monsterType.WIGGLYFELLA)
+            {
+                if (spookResource > 1 && spookResource < 2)
+                {
+                    anim2 = monster1Model.GetComponent<Animator>();
+                }
+                if (spookResource > 2)
+                {
+                    anim2 = monster1FinalForm.GetComponent<Animator>();
+                }
+            }
+            if (playerChoice.monsterSelection == playerScript.monsterType.BALLFELLA)
+            {
+                if (spookResource > 1 && spookResource < 2)
+                {
+                    anim2 = monster2Model.GetComponent<Animator>();
+                }
+                if (spookResource > 2)
+                {
+                    anim2 = monster2FinalForm.GetComponent<Animator>();
+                }
+            }
+            if (playerChoice.monsterSelection == playerScript.monsterType.SNAKEFELLA)
+            {
+                if (spookResource > 1 && spookResource < 2)
+                {
+                    anim2 = monster3Model.GetComponent<Animator>();
+                }
+                if (spookResource > 2)
+                {
+                    anim2 = monster3FinalForm.GetComponent<Animator>();
+                }
+            }
+            if (playerChoice.monsterSelection == playerScript.monsterType.CORNFELLA)
+            {
+                if (spookResource > 1 && spookResource < 2)
+                {
+                    anim2 = monster4Model.GetComponent<Animator>();
+                }
+                if (spookResource > 2)
+                {
+                    anim2 = monster4FinalForm.GetComponent<Animator>();
+                }
+            }
+        }
+
         //dumb first person mode start
         if(firstPersonMode == true)
         {
@@ -210,13 +265,10 @@ public class playerScript : MonoBehaviour
         //lovely actions section
         if (Input.GetKeyDown(scareKey) || Input.GetButtonDown("Scare"))
         {
-            if (stealthed == false)
-            {
                 anim.SetTrigger("scare");
                 anim2.SetTrigger("spook");
                 aud.pitch = Random.Range(.5f, 1.5f);
                 aud.Play();
-            }
         }
 
         //debug slime trail enable/disable
@@ -292,6 +344,10 @@ public class playerScript : MonoBehaviour
         //stealth checks &  value changes
         if (stealthed == false)
         {
+            if(darkParticles.isPlaying == true)
+            {
+                darkParticles.Stop();
+            }
             playerIconAnim.SetBool("amSeen", true);
             if (spookResource > 0)
             {
@@ -304,6 +360,10 @@ public class playerScript : MonoBehaviour
         }
         if(stealthed == true)
         {
+            if(darkParticles.isPlaying == false)
+            {
+                darkParticles.Play();
+            }
             playerIconAnim.SetBool("amSeen", false);
             if (spookResource < spookOMeter.maxValue)
             {
@@ -377,24 +437,61 @@ public class playerScript : MonoBehaviour
             {
                 if (playerChoice.monsterSelection == playerScript.monsterType.WIGGLYFELLA)
                 {
-                    monster1Model.SetActive(true);
-                    monster1BabyModel.SetActive(false);
+                    if(spookResource > 1 && spookResource < 2)
+                    {
+                        monster1Model.SetActive(true);
+                        monster1BabyModel.SetActive(false);
+                        monster1FinalForm.SetActive(false);
+                    }
+                    if(spookResource > 2)
+                    {
+                        monster1FinalForm.SetActive(true);
+                        monster1Model.SetActive(false);
+                    }
                 }
                 if (playerChoice.monsterSelection == playerScript.monsterType.BALLFELLA)
                 {
-                    monster2Model.SetActive(true);
-                    monster2BabyModel.SetActive(false);
+                    if (spookResource > 1 && spookResource < 2)
+                    {
+                        monster2Model.SetActive(true);
+                        monster2BabyModel.SetActive(false);
+                        monster2FinalForm.SetActive(false);
+                    }
+                    if (spookResource > 2)
+                    {
+                        monster2FinalForm.SetActive(true);
+                        monster2Model.SetActive(false);
+                    }
                 }
                 if (playerChoice.monsterSelection == playerScript.monsterType.SNAKEFELLA)
                 {
-                    monster3Model.SetActive(true);
-                    monster3BabyModel.SetActive(false);
+                    if (spookResource > 1 && spookResource < 2)
+                    {
+                        monster3Model.SetActive(true);
+                        monster3BabyModel.SetActive(false);
+                        monster3FinalForm.SetActive(false);
+                    }
+                    if (spookResource > 2)
+                    {
+                        monster3FinalForm.SetActive(true);
+                        monster3Model.SetActive(false);
+                    }
                 }
                 if (playerChoice.monsterSelection == playerScript.monsterType.CORNFELLA)
                 {
-                    monster4Model.SetActive(true);
-                    monster4BabyModel.SetActive(false);
-                    monster4CornModeModel.SetActive(false);
+                    if (spookResource > 1 && spookResource < 2)
+                    {
+                        monster4Model.SetActive(true);
+                        monster4BabyModel.SetActive(false);
+                        monster4CornModeModel.SetActive(false);
+                        monster4FinalForm.SetActive(false);
+                    }
+                    if (spookResource > 2)
+                    {
+                        monster4FinalForm.SetActive(true);
+                        monster4Model.SetActive(false);
+                        monster4CornModeModel.SetActive(false);
+                    }
                 }
             }
         }
@@ -402,6 +499,7 @@ public class playerScript : MonoBehaviour
         {
             monster4Model.SetActive(false);
             monster4BabyModel.SetActive(false);
+            monster4FinalForm.SetActive(false);
             monster4CornModeModel.SetActive(true);
         }
 
