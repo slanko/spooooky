@@ -30,6 +30,8 @@ public class godScript : MonoBehaviour
     public Text softscoreCounter, ScoreCounter, timerText;
     public TimeSpan gameTime;
     public float timeScoreMult, timeScoreMultDecay, timeScoreMultMin;
+    public float globalHighscore;
+    public Text yourScore, highScore;
 
     [Header("Audio Stuff")]
     public KeyCode musicMuteButton;
@@ -65,6 +67,12 @@ public class godScript : MonoBehaviour
         setLightColour();
         muzik.volume = PlayerPrefs.GetFloat("musicVolume");
         globalAudioVolume = PlayerPrefs.GetFloat("audioVolume");
+        if(PlayerPrefs.GetFloat("localHighScore") != 0)
+        {
+            globalHighscore = PlayerPrefs.GetFloat("localHighScore");
+        }
+        Debug.Log(PlayerPrefs.GetFloat("localHighScore"));
+        highScore.text = PlayerPrefs.GetFloat("localHighScore").ToString();
     }
 
     // Update is called once per frame
@@ -78,7 +86,6 @@ public class godScript : MonoBehaviour
                 invokedRestart = true;
                 logScore();
                 GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "Test Level", sendScore);
-                Invoke("resetGame", 3);
             }
         }
         if (Input.GetKeyDown(KeyCode.P))
@@ -167,6 +174,13 @@ public class godScript : MonoBehaviour
         loggedScore = loggedScore + softScore;
         softScore = 0;
         scoreMultiplier = 0;
+        if (loggedScore > PlayerPrefs.GetFloat("localHighScore"))
+        {
+            PlayerPrefs.SetFloat("localHighScore", loggedScore);
+            highScore.text = PlayerPrefs.GetFloat("localHighScore").ToString();
+        }
+        yourScore.text = loggedScore.ToString();
+
     }
 
     public void registerObserver(GameObject observer)
