@@ -75,7 +75,6 @@ public class NPCscript : MonoBehaviour
             funnyVelocity = funnyVelocity * -1;
         }
         anim.SetFloat("runSpeed", funnyVelocity);
-        Debug.Log(funnyVelocity);
         Debug.DrawLine(transform.position, nav.destination, Color.green);
         if(scared == true)
         {

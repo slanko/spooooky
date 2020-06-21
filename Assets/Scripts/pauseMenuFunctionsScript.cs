@@ -55,4 +55,10 @@ public class pauseMenuFunctionsScript : MonoBehaviour
         pauseMenuAnim.SetBool("controlsUp", false);
         pauseMenuAnim.SetBool("controlsSwap", false);
     }
+
+    public void restartThaGame()
+    {
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.name);
+    }
 }
