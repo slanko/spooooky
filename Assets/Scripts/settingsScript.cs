@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class settingsScript : MonoBehaviour
 {
     public Dropdown settingsDropdown;
@@ -13,6 +14,10 @@ public class settingsScript : MonoBehaviour
         settingsDropdown.value = QualitySettings.GetQualityLevel();
         musicSlider.value = PlayerPrefs.GetFloat("musicVolume", 0.4f);
         sfxSlider.value = PlayerPrefs.GetFloat("audioVolume");
+        if (SceneManager.GetActiveScene().name == "MainMenuTest")
+        {
+            GameObject.Find("menuMuzik").GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("musicVolume");
+        }
     }
     public void settingsChange()
     {
@@ -24,6 +29,10 @@ public class settingsScript : MonoBehaviour
     public void audioChange()
     {
         PlayerPrefs.SetFloat("musicVolume", musicSlider.value);
+        if (SceneManager.GetActiveScene().name == "MainMenuTest")
+        {
+            GameObject.Find("menuMuzik").GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("musicVolume");
+        }
         PlayerPrefs.Save();
     }
 
@@ -39,6 +48,10 @@ public class settingsScript : MonoBehaviour
         PlayerPrefs.SetFloat("musicVolume", musicSlider.value);
         PlayerPrefs.Save();
         GameObject.Find("GOD").GetComponent<godScript>().muzik.volume = PlayerPrefs.GetFloat("musicVolume");
+        if(SceneManager.GetActiveScene().name == "MainMenuTest")
+        {
+            GameObject.Find("menuMuzik").GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("musicVolume");
+        }
     }
 
     public void sfxChangeAtRuntime()
