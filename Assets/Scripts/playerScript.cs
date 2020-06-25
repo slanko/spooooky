@@ -41,6 +41,13 @@ public class playerScript : MonoBehaviour
     public float oldSpookGain, cornModeSpookGain;
     public ParticleSystem monster4Particles;
 
+    [Header("huh??"), Tooltip("what the hell is this??")]
+    public float monster5MoveSpeed;
+    public float monster5ScareRadius, monster5BlockRadius, monster5SpookGain, monster5SpookDecay;
+    public GameObject monster5Model, monster5BabyModel, monster5FinalForm;
+    public Sprite monster5Image1, monster5Image2, monster5Image3;
+    public ParticleSystem monster5Particles;
+
     [Header("Global Inputs")]
     public KeyCode scareKey;
     public KeyCode useKey, camLeftKey, camRightKey, resetGameKey;
@@ -86,7 +93,8 @@ public class playerScript : MonoBehaviour
         WIGGLYFELLA,
         BALLFELLA,
         SNAKEFELLA,
-        CORNFELLA
+        CORNFELLA,
+        SECRET1
     }
     // Start is called before the first frame update
     void Start() 
@@ -109,6 +117,7 @@ public class playerScript : MonoBehaviour
             monster2Model.SetActive(false);
             monster3Model.SetActive(false);
             monster4Model.SetActive(false);
+            monster5Model.SetActive(false);
             anim2 = monster1Model.GetComponent<Animator>();
             spookLevelImage1 = monster1Image1;
             spookLevelImage2 = monster1Image2;
@@ -125,6 +134,7 @@ public class playerScript : MonoBehaviour
             monster2Model.SetActive(true);
             monster3Model.SetActive(false);
             monster4Model.SetActive(false);
+            monster5Model.SetActive(false);
             anim2 = monster2Model.GetComponent<Animator>();
             spookLevelImage1 = monster2Image1;
             spookLevelImage2 = monster2Image2;
@@ -141,6 +151,7 @@ public class playerScript : MonoBehaviour
             monster2Model.SetActive(false);
             monster3Model.SetActive(true);
             monster4Model.SetActive(false);
+            monster5Model.SetActive(false);
             anim2 = monster3Model.GetComponent<Animator>();
             spookLevelImage1 = monster3Image1;
             spookLevelImage2 = monster3Image2;
@@ -157,11 +168,30 @@ public class playerScript : MonoBehaviour
             monster2Model.SetActive(false);
             monster3Model.SetActive(false);
             monster4Model.SetActive(true);
+            monster5Model.SetActive(false);
             anim2 = monster4Model.GetComponent<Animator>();
             spookLevelImage1 = monster4Image1;
             spookLevelImage2 = monster4Image2;
             spookLevelImage3 = monster4Image3;
             oldSpookGain = monster4SpookGain;
+        }
+
+        if (playerChoice.monsterSelection == monsterType.SECRET1)
+        {
+            moveSpeed = monster5MoveSpeed;
+            scareRadius.radius = monster5ScareRadius;
+            scareRadiusMult = monster5BlockRadius;
+            spookGainRate = monster5SpookGain;
+            spookDiminishRate = monster5SpookDecay;
+            monster1Model.SetActive(false);
+            monster2Model.SetActive(false);
+            monster3Model.SetActive(false);
+            monster4Model.SetActive(false);
+            monster5Model.SetActive(true);
+            anim2 = monster1Model.GetComponent<Animator>();
+            spookLevelImage1 = monster1Image1;
+            spookLevelImage2 = monster1Image2;
+            spookLevelImage3 = monster1Image3;
         }
 
         moveSpeedFactor = 1;
@@ -432,6 +462,11 @@ public class playerScript : MonoBehaviour
                     monster4BabyModel.SetActive(true);
                     monster4CornModeModel.SetActive(false);
                 }
+                if(playerChoice.monsterSelection == playerScript.monsterType.SECRET1)
+                {
+                    monster5Model.SetActive(false);
+                    monster5BabyModel.SetActive(true);
+                }
             }
             else
             {
@@ -491,6 +526,20 @@ public class playerScript : MonoBehaviour
                         monster4FinalForm.SetActive(true);
                         monster4Model.SetActive(false);
                         monster4CornModeModel.SetActive(false);
+                    }
+                }
+                if (playerChoice.monsterSelection == playerScript.monsterType.SECRET1)
+                {
+                    if (spookResource > 1 && spookResource < 2)
+                    {
+                        monster5Model.SetActive(true);
+                        monster5BabyModel.SetActive(false);
+                        monster5FinalForm.SetActive(false);
+                    }
+                    if (spookResource > 2)
+                    {
+                        monster5FinalForm.SetActive(true);
+                        monster5Model.SetActive(false);
                     }
                 }
             }

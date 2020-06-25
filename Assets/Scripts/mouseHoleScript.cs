@@ -19,6 +19,6 @@ public class mouseHoleScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.DrawLine(transform.position, otherHole.transform.position, Color.gray);
+        Debug.DrawLine(transform.position, new Vector3(otherHole.transform.position.x, otherHole.transform.position.y, otherHole.transform.position.z + 1), Color.gray);
     }
 }

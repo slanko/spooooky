@@ -46,6 +46,10 @@ public class menuDropdownScript : MonoBehaviour
         {
             playerChoice.monsterSelection = playerScript.monsterType.CORNFELLA;
         }
+        if(monsterNum == 69)
+        {
+            playerChoice.monsterSelection = playerScript.monsterType.SECRET1;
+        }
         SceneManager.LoadScene(levelToLoad);
     }
 
